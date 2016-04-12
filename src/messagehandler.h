@@ -3,13 +3,13 @@
 ** support, and with no warranty, express or implied, as to its usefulness for
 ** any purpose.
 **
-** Newsgroup.h
+** messagehandler.h
 ** <very brief file description>
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef _Newsgroup_h
-#define _Newsgroup_h
+#ifndef _messagehandler_h
+#define _messagehandler_h
 
 /*-------------------------------------
     I N C L U D E S
@@ -25,16 +25,15 @@ using namespace std;
     C L A S S   D E F
 -------------------------------------*/
 
-class Newsgroup() {
+class MessageHandler() {
 public:
-  Newsgroup() {}
-  ~Newsgroup() {}
+  MessageHandler() {}
+  ~MessageHandler() {}
 
 protected:
-  string name;
-  uint id;
+
 private:
 
-}
+};
 
 #endif
