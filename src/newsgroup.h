@@ -32,7 +32,7 @@ public:
 
 protected:
   string name;
-  uint id;
+  unsigned int id;
 private:
 
 };
