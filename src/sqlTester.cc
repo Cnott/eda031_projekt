@@ -7,6 +7,8 @@
   headers from cppconn/ and mysql_driver.h + mysql_util.h
   (and mysql_connection.h). This will reduce your build time!
   In order to run sudo apt-get install  libmysqlcppconn-dev
+  Compile with: sudo g++ -Wall -I/usr/include/cppconn -o sqlTester sqlTester.cc -L/usr/lib -lmysqlcppconn
+
 */
 #include "mysql_connection.h"
 
