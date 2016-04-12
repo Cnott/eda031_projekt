@@ -8,8 +8,8 @@
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef _constants_h
-#define _constants_h
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 /*-------------------------------------
     S T R I N G   D E F I N E S

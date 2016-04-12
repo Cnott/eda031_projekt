@@ -8,8 +8,8 @@
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef _messagehandler_h
-#define _messagehandler_h
+#ifndef MESSAGEHANDLER_H
+#define MESSAGEHANDLER_H
 
 /*-------------------------------------
     I N C L U D E S

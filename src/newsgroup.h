@@ -8,8 +8,8 @@
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef _newsgroup_h
-#define _newsgroup_h
+#ifndef NEWSGROUP_H
+#define NEWSGROUP_H
 
 /*-------------------------------------
     I N C L U D E S
