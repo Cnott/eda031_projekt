@@ -14,13 +14,16 @@
 #include <regex>
 #include <random>
 #include <stdexcept>
-#include "article.h"
-#include "constants.h"
-#include "newsgroup.h"
-#include "messagehandler.h"
+#include "../server/article.h"
+#include "../common/constants.h"
+#include "../server/newsgroup.h"
+#include "../common/messagehandler.h"
+
+using namespace std;
 
 int main() {
   cout << "This is a tester to check functionality of our classes: ";
   cout << endl;
+  String aText = "This article is about "
   return 0;
 }
