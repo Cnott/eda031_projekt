@@ -4,7 +4,7 @@
 ** any purpose.
 **
 ** messagehandler.h
-** <very brief file description>
+** Handles "low protocol level" communication. Used both by server and client.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
@@ -19,21 +19,32 @@
 /*-------------------------------------
     D E C L A R A T I O N S
 -------------------------------------*/
-using namespace std;
-
+// namespace not recommended in header files
 /*-------------------------------------
     C L A S S   D E F
 -------------------------------------*/
 
 class MessageHandler() {
 public:
-  MessageHandler() {}
+  MessageHandler(Connection c) : conn{c} {}
   ~MessageHandler() {}
+  void setLogWindow(Logger logW) : logWindow{logW} {}
+  void sendCode(int code) {}
+  void sendInt(int value) {}
+  void sendIntParameter(int param) {}
+  void sendStringParameter(std::string param) {}
+  int recvCode() {}
+  int recvInt() {}
+  int recvIntParameter() {}
+  std::string recvStringParameter() {}
 
 protected:
 
 private:
-
+  void sendByte(int code) {}
+  int recvByte() {}
+  Connection conn; // the connection
+  Logger logWindow; // the log window
 };
 
 #endif
