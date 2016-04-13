@@ -27,7 +27,9 @@
 class Article {
 public:
   Article(unsigned int, std::string, std::string, std::string);
-  ~Article();
+  const unsigned int getId();
+  const std::string getTitle();
+  const std::string getAuthor();
   const std::string getText();
 
 protected:

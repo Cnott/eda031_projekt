@@ -24,11 +24,5 @@ using namespace std;
 int main() {
   cout << "This is a tester to check functionality of our classes: ";
   cout << endl;
-  string aText = "This article is about elephants.";
-  string aAuthor = "Anton Friberg";
-  string aTitle = "Elephants are nice";
-  unsigned int id = 1;
-  Article a1(id, aTitle, aAuthor, aText);
-  cout << a1.getText() << endl;
   return 0;
 }
