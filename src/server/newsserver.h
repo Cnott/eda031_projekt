@@ -19,9 +19,9 @@
 #include <stdexcept>
 
 #include "server.h"
-#include "connection.h"
-#include "connectionclosedexception.h"
-#include "../common/MessageHandler.h"
+#include "../common/connection.h"
+#include "../common/connectionclosedexception.h"
+#include "../common/messagehandler.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -34,15 +34,12 @@
 
 class NewsServer {
 public:
-  NewsServer() {}
-  ~NewsServer() {}
+  NewsServer(int argc, char* argv[]);
+  ~NewsServer();
   void run();
 
 private:
   int port = -1;
-  Server server;
-  MessageHandler msgH;
-
 };
 
 #endif

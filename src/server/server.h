@@ -27,7 +27,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "connection.h"
+#include "../common/connection.h"
 #include <vector>
 #include <memory>
 
