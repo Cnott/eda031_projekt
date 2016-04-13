@@ -16,16 +16,17 @@ LDFLAGS   = -g -L..
 #LDFLAGS +=  -stdlib=libc++
 
 OUTPUT = bin/
+SERVER = src/server/
 #SERVER = src/server/
 
 # Targets
-PROGS = src/server/testMain
+PROGS = $(SERVER)testMain
 
 all: $(PROGS)
-	mv src/server/testMain $(OUTPUT)
+	mv $(SERVER)testMain $(OUTPUT)
 
 # Targets rely on implicit rules for compiling and linking
-src/server/testMain: src/server/testMain.o src/server/article.o src/server/newsgroup.o
+$(SERVER)testMain: $(SERVER)testMain.o $(SERVER)article.o $(SERVER)newsgroup.o
 
 # Phony targets
 .PHONY: all clean
@@ -34,8 +35,8 @@ src/server/testMain: src/server/testMain.o src/server/article.o src/server/newsg
 clean:
 	rm -f *.o $(PROGS)
 	rm -f *.d
-	rm -f src/server/*.o
-	rm -f bin/testMain
+	rm -f $(SERVER)*.o
+	rm -f $(OUTPUT)testMain
 
 # Generate dependencies in *.d files
 %.d: %.cc
