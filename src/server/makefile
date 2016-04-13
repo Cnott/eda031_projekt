@@ -24,7 +24,7 @@ CXXFLAGS += -g
 PROGS = testMain
 
 all: $(PROGS)
-testMain: testMain.o article.o
+testMain: testMain.o article.o newsgroup.o
 
 # Targets rely on implicit rules for compiling and linking
 #tag_main: tag_main.o tagremover.o

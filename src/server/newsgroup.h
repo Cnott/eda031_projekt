@@ -15,11 +15,13 @@
     I N C L U D E S
 -------------------------------------*/
 #include <string>
+#include <map>
+#include "article.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
 -------------------------------------*/
-using namespace std;
+// Not recommended -> using namespace std;
 
 /*-------------------------------------
     C L A S S   D E F
@@ -27,13 +29,18 @@ using namespace std;
 
 class Newsgroup {
 public:
-  Newsgroup() {}
-  ~Newsgroup() {}
+  Newsgroup(std::string name);
+  bool add(Article);
+  bool remove(unsigned int);
+  const Article& at(unsigned int);
+  std::map<unsigned int, Article>::iterator begin();
+  std::map<unsigned int, Article>::iterator end();
 
 protected:
-  string name;
+  std::string name;
   unsigned int id;
 private:
+  std::map<unsigned int, Article> articles;
 
 };
 

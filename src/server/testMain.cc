@@ -13,6 +13,7 @@
 #include <array>
 #include <regex>
 #include <random>
+#include <map>
 #include <stdexcept>
 #include "../server/article.h"
 #include "../common/constants.h"
@@ -28,10 +29,15 @@ int main() {
   string aAuthor = "Anton Friberg";
   string aTitle = "National Neographics: Elephants";
   unsigned int id = 1;
+
   Article a1(id, aTitle, aAuthor, aText);
   cout << a1.getId() << "\n";
   cout << a1.getTitle() << "\n";
   cout << a1.getAuthor() << "\n";
   cout << a1.getText() << endl;
+
+  Newsgroup n1 ("Channel 1");
+  n1.add(a1);
+
   return 0;
 }
