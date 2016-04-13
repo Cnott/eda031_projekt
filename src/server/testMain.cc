@@ -34,10 +34,22 @@ int main() {
   cout << a1.getId() << "\n";
   cout << a1.getTitle() << "\n";
   cout << a1.getAuthor() << "\n";
-  cout << a1.getText() << endl;
+  cout << a1.getText() << "\n" << endl;
 
-  Newsgroup n1 ("Channel 1");
-  n1.add(a1);
+  Article a2(2, "National Neographics: Giraffe", "Lasse Åberg", "This article is about giraffes.");
+  Article a3(3, "National Neographics: Hippopotumus", "Scott Manley", "This article is about hippopotumuses.");
+  Article a4(4, "National Neographics: Lion", "Mr Smith", "This article is about lions.");
+
+
+
+  Newsgroup nn ("Nature News");
+  nn.add(a1); nn.add(a2); nn.add(a3); nn.add(a4);
+  for (auto it : nn) {
+    cout << "Author: " << it.second.getAuthor() << endl;
+    cout << "Title: " << it.second.getTitle() << endl;
+    cout << "Text: " << it.second.getText() << endl;
+    cout << "\n" << endl;
+  }
 
   return 0;
 }

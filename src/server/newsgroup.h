@@ -4,7 +4,7 @@
 ** any purpose.
 **
 ** newsgroup.h
-** <very brief file description>
+** A container class for articles.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
@@ -34,7 +34,7 @@ public:
   bool remove(unsigned int);
   const Article& at(unsigned int);
   std::map<unsigned int, Article>::iterator begin();
-  std::map<unsigned int, Article>::iterator end();
+  std::map<unsigned int, Article>::iterator begin();
 
 protected:
   std::string name;
