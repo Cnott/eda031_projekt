@@ -26,11 +26,13 @@
 -------------------------------------*/
 class Article {
 public:
-  Article() {}
-  ~Article() {}
+  Article(unsigned int, std::string, std::string, std::string);
+  ~Article();
+  const std::string getText();
 
 protected:
   unsigned int id;
+  std::string title;
   std::string author;
   std::string text;
 private:

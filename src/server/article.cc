@@ -1,9 +1,14 @@
 #include "article.h"
+#include <string>
 
-Article::Article() {
+using namespace std;
 
+Article::Article(unsigned int id, string title, string author, string text) {
+  this->title = title;
+  this->author = author;
+  this->text = text;
+  this->id = id;
 }
-
-Article::~Article() {
-
+const string Article::getText() {
+  return text;
 }

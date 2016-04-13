@@ -21,9 +21,10 @@ CXXFLAGS += -g
 #CXXFLAGS += -stdlib=libc++
 
 # Targets for server files
-PROGS =
+PROGS = testMain
 
 all: $(PROGS)
+testMain: testMain.o
 
 # Targets rely on implicit rules for compiling and linking
 #tag_main: tag_main.o tagremover.o
