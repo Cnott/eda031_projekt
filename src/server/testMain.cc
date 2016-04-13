@@ -15,7 +15,7 @@
 #include <random>
 #include <map>
 #include <stdexcept>
-#include "../server/article.h"
+#include "article.h"
 #include "../common/constants.h"
 #include "../server/newsgroup.h"
 #include "../common/messagehandler.h"
@@ -36,6 +36,7 @@ int main() {
   cout << a1.getAuthor() << "\n";
   cout << a1.getText() << "\n" << endl;
 
+
   Article a2(2, "National Neographics: Giraffe", "Lasse Åberg", "This article is about giraffes.");
   Article a3(3, "National Neographics: Hippopotumus", "Scott Manley", "This article is about hippopotumuses.");
   Article a4(4, "National Neographics: Lion", "Mr Smith", "This article is about lions.");
@@ -50,6 +51,4 @@ int main() {
     cout << "Text: " << it.second.getText() << endl;
     cout << "\n" << endl;
   }
-
-  return 0;
 }

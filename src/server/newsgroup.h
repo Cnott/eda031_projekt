@@ -34,7 +34,7 @@ public:
   bool remove(unsigned int);
   const Article& at(unsigned int);
   std::map<unsigned int, Article>::iterator begin();
-  std::map<unsigned int, Article>::iterator begin();
+  std::map<unsigned int, Article>::iterator end();
 
 protected:
   std::string name;
