@@ -25,7 +25,7 @@ using namespace std;
     C L A S S   D E F
 -------------------------------------*/
 
-class Newsgroup() {
+class Newsgroup {
 public:
   Newsgroup() {}
   ~Newsgroup() {}

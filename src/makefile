@@ -19,9 +19,10 @@ LDFLAGS   = -g -L..
 
 
 # Targets
-PROGS =
+PROGS = testMain
 
 all: $(PROGS)
+testMain: testMain.o
 
 # Targets rely on implicit rules for compiling and linking
 # The dependency on libclientserver.a is not defined.

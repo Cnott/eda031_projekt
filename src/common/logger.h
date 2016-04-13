@@ -3,13 +3,13 @@
 ** support, and with no warranty, express or implied, as to its usefulness for
 ** any purpose.
 **
-** article.h
+** logger.h
 ** <very brief file description>
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef ARTICLE_H
-#define ARTICLE_H
+#ifndef LOGGER_H
+#define LOGGER_H
 
 /*-------------------------------------
     I N C L U D E S
@@ -19,20 +19,20 @@
 /*-------------------------------------
     D E C L A R A T I O N S
 -------------------------------------*/
-using namespace std;
+// not recommended -> using namespace std;
 
 /*-------------------------------------
     C L A S S   D E F
 -------------------------------------*/
-class article() {
+class Logger {
 public:
-  Newsgroup() {}
-  ~Newsgroup() {}
+  Logger() {}
+  ~Logger() {}
 
 protected:
   unsigned int id;
-  string author;
-  string text;
+  std::string author;
+  std::string text;
 private:
 
 };

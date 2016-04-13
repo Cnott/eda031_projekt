@@ -15,6 +15,8 @@
     I N C L U D E S
 -------------------------------------*/
 #include <string>
+#include "connection.h"
+#include "logger.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -24,11 +26,11 @@
     C L A S S   D E F
 -------------------------------------*/
 
-class MessageHandler() {
+class MessageHandler {
 public:
-  MessageHandler(Connection c) : conn{c} {}
-  ~MessageHandler() {}
-  void setLogWindow(Logger logW) : logWindow{logW} {}
+  MessageHandler(const Connection& c);
+  ~MessageHandler();
+  void setLogWindow(Logger logW);
   void sendCode(int code) {}
   void sendInt(int value) {}
   void sendIntParameter(int param) {}
