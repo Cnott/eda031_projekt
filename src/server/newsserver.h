@@ -37,11 +37,10 @@ class NewsServer {
 public:
   NewsServer(int argc, char* argv[]);
   ~NewsServer();
-  void run();
+  void run(Database& db);
 
 private:
   int port = -1;
-  Database db;
 };
 
 #endif

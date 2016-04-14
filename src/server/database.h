@@ -27,15 +27,14 @@
 
 class Database {
 public:
-  Database();
-  virtual ~Database();
+  virtual ~Database() {}
 
-  virtual void saveNewsgroup(std::string ngName);
+  virtual void saveNewsgroup(std::string ngName) {};
   virtual void saveArticle (int ngID, std::string artName, std::string author,
-                            std::string text);
-  virtual void listNewsGroup();
-  virtual void listArticles(int nwId);
-  virtual void getArticle(int ngID, int artID);
+                            std::string text) {};
+  virtual void listNewsGroup() {};
+  virtual void listArticles(int nwId) {};
+  virtual void getArticle(int ngID, int artID) {};
 
 private:
 

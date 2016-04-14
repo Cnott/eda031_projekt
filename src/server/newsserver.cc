@@ -19,8 +19,10 @@ NewsServer::NewsServer(int argc, char* argv[]) {
 
 NewsServer::~NewsServer() {}
 
-void NewsServer::run() {
+void NewsServer::run(Database& db_in) {
+  Database db = db_in;
   Server server(port);
+
   if (!server.isReady()) {
 		cerr << "Server initialization error." << endl;
 		exit(1);
