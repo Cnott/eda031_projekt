@@ -3,52 +3,39 @@
 ** support, and with no warranty, express or implied, as to its usefulness for
 ** any purpose.
 **
-** messagehandler.h
-** Handles "low protocol level" communication. Used both by server and client.
+** servercommandhandler.h
+** <very brief file description>
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef MESSAGEHANDLER_H
-#define MESSAGEHANDLER_H
+#ifndef SERVERCOMMANDHANDLER_H
+#define SERVERCOMMANDHANDLER_H
 
 /*-------------------------------------
     I N C L U D E S
 -------------------------------------*/
-#include <string>
-#include "connection.h"
-#include "logger.h"
-#include "protocol.h"
-
+#include "../common/messagehandler.h"
+#include "../common/protocol.h"
+#include "database.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
 -------------------------------------*/
-// namespace not recommended in header files
+
+
 /*-------------------------------------
     C L A S S   D E F
 -------------------------------------*/
 
-class MessageHandler {
+class ServerCommandHandler {
 public:
-  MessageHandler(Connection &c );
-  ~MessageHandler();
-  void sendInt(int value);
-  void sendIntParameter(int param);
-  void sendStringParameter(std::string param);
-  int recvCode();
-  int recvInt();
-  int recvIntParameter();
-  std::string recvStringParameter();
+  ServerCommandHandler(MessageHandler&, Database&);
+  void update();
 
-protected:
 
 private:
-  Connection *conn;  // the connection
-  void sendByte(int i);
-  void sendCode(int code);
-  int recvByte();
-
-
+  MessageHandler msH;
+  Database db;
 };
 
 #endif

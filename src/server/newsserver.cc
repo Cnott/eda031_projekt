@@ -29,13 +29,23 @@ void NewsServer::run(Database& db_in) {
 	}
 
   while (true) {
+
     auto conn = server.waitForActivity();
+
     if (conn != nullptr) {
       // handle messages
+      MessageHandler msH(*conn.get());
+      //ServerCommandHandler scH(msH, db);
+
+      try {
+        //scH.update();
+      } catch (ConnectionClosedException e) {
+
+      }
       /*
       *Något i stil med
       *MessageHandler mh=new MessageHandler(conn);
-      *switch(mh.recvCode)
+      *switch(mh.recvCode())
       *
       *case: LIST_NG
       *     mh.recvStringParameter();

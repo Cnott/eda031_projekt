@@ -11,7 +11,7 @@ public class MessageHandler {
 
 	/**
 	 * Create a message handler.
-	 * 
+	 *
 	 * @param conn
 	 *            The connection to use messages
 	 */
@@ -21,7 +21,7 @@ public class MessageHandler {
 
 	/**
 	 * Set the log window to use.
-	 * 
+	 *
 	 * @param logWindow
 	 *            The log window
 	 */
@@ -39,7 +39,7 @@ public class MessageHandler {
 
 	/**
 	 * Transmit a code (a constant from the Protocol class).
-	 * 
+	 *
 	 * @param code
 	 *            The code to transmit.
 	 * @throws ConnectionClosedException
@@ -52,7 +52,7 @@ public class MessageHandler {
 
 	/**
 	 * Transmit an int value, according to the protocol.
-	 * 
+	 *
 	 * @param value
 	 *            The value to transmit
 	 * @throws ConnectionClosedException
@@ -71,7 +71,7 @@ public class MessageHandler {
 
 	/**
 	 * Transmit an int parameter, according to the protocol.
-	 * 
+	 *
 	 * @param value
 	 *            The parameter to transmit
 	 * @throws ConnectionClosedException
@@ -84,7 +84,7 @@ public class MessageHandler {
 
 	/**
 	 * Transmit a string parameter, according to the protocol.
-	 * 
+	 *
 	 * @param value
 	 *            The parameter to transmit
 	 * @throws ConnectionClosedException
@@ -110,7 +110,7 @@ public class MessageHandler {
 
 	/**
 	 * Receive a command code or an error code from the server.
-	 * 
+	 *
 	 * @return The code
 	 * @throws ConnectionClosedException
 	 *             If the server died
@@ -123,7 +123,7 @@ public class MessageHandler {
 
 	/**
 	 * Receive an int value from the server.
-	 * 
+	 *
 	 * @return The int value
 	 * @throws ConnectionClosedException
 	 *             If the server died
@@ -143,7 +143,7 @@ public class MessageHandler {
 
 	/**
 	 * Receive an int parameter from the server.
-	 * 
+	 *
 	 * @return The parameter value
 	 * @throws ConnectionClosedException
 	 *             If the server died
@@ -159,7 +159,7 @@ public class MessageHandler {
 
 	/**
 	 * Receive a string parameter from the server.
-	 * 
+	 *
 	 * @return The parameter value
 	 * @throws ConnectionClosedException
 	 *             If the server died

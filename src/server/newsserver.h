@@ -23,6 +23,7 @@
 #include "../common/connectionclosedexception.h"
 #include "../common/messagehandler.h"
 #include "database.h"
+#include "servercommandhandler.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
