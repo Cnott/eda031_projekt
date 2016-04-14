@@ -17,6 +17,8 @@
 #include <string>
 #include "connection.h"
 #include "logger.h"
+#include "protocol.h"
+
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -28,25 +30,25 @@
 
 class MessageHandler {
 public:
-  MessageHandler(const Connection& c);
+  MessageHandler(Connection &c );
   ~MessageHandler();
-  void setLogWindow(Logger logW);
-  void sendCode(int code) {}
-  void sendInt(int value) {}
-  void sendIntParameter(int param) {}
-  void sendStringParameter(std::string param) {}
-  int recvCode() {}
-  int recvInt() {}
-  int recvIntParameter() {}
-  std::string recvStringParameter() {}
+  void sendInt(int value);
+  void sendIntParameter(int param);
+  void sendStringParameter(std::string param);
+  int recvCode();
+  int recvInt();
+  int recvIntParameter();
+  std::string recvStringParameter();
 
 protected:
 
 private:
-  void sendByte(int code) {}
-  int recvByte() {}
-  Connection conn; // the connection
-  Logger logWindow; // the log window
+  Connection *conn;  // the connection
+  void sendByte(int i);
+  void sendCode(int code);
+  int recvByte();
+
+
 };
 
 #endif
