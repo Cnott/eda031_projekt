@@ -32,12 +32,11 @@ public:
   const std::string getAuthor();
   const std::string getText();
 
-protected:
+private:
   unsigned int id;
   std::string title;
   std::string author;
   std::string text;
-private:
 
 };
 

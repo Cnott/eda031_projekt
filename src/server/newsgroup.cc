@@ -5,6 +5,10 @@ Newsgroup::Newsgroup(string name) {
   this->name = name;
 }
 
+string Newsgroup::getName() {
+  return name;
+}
+
 bool Newsgroup::add(Article a) {
   if (articles.insert(make_pair(a.getId(),a)).second == false)
     return false;

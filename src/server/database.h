@@ -15,6 +15,8 @@
     I N C L U D E S
 -------------------------------------*/
 #include <string>
+#include <vector>
+#include "newsgroup.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -28,16 +30,16 @@
 class Database {
 public:
   virtual ~Database() {}
-
-  virtual void saveNewsgroup(std::string ngName) {};
-  virtual void saveArticle (int ngID, std::string artName, std::string author,
-                            std::string text) {};
-  virtual void listNewsGroup() {};
-  virtual void listArticles(int nwId) {};
-  virtual void getArticle(int ngID, int artID) {};
-
+  virtual bool addNewsgroup(std::string ngName) = 0;
+  virtual bool addArticle(unsigned int ngId, std::string artName, std::string author, std::string text) = 0;
+  virtual bool removeNewsgroup(unsigned int ngId) = 0;
+  virtual bool removeArticle(unsigned int ngId, unsigned int aId) = 0;
+  virtual std::string getNewsgroupName(unsigned int ngId) = 0;
+  virtual std::vector<Newsgroup> listNewsGroups() = 0;
+  virtual std::vector<Article> listArticles(unsigned int ngId) = 0;
+  virtual const Article& getArticle(unsigned int ngID, unsigned int artID) = 0;
 private:
-
+  virtual bool newsgroupInDB(unsigned int) = 0;
 };
 
 #endif

@@ -30,16 +30,15 @@
 class Newsgroup {
 public:
   Newsgroup(std::string name);
+  std::string getName();
   bool add(Article);
   bool remove(unsigned int);
   const Article& at(unsigned int);
   std::map<unsigned int, Article>::iterator begin();
   std::map<unsigned int, Article>::iterator end();
-
-protected:
+private:
   std::string name;
   unsigned int id;
-private:
   std::map<unsigned int, Article> articles;
 
 };
