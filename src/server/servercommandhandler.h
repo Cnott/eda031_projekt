@@ -38,6 +38,7 @@ public:
 
 private:
   void listNewsgroups();
+  void createNewsGroup();
 
   MessageHandler msH;
   Database* db;

@@ -35,10 +35,10 @@ void NewsServer::run(Database& db_in) {
     if (conn != nullptr) {
       // handle messages
       MessageHandler msH(*conn.get());
-      //ServerCommandHandler scH(msH, db);
+      ServerCommandHandler scH(msH, *db);
 
       try {
-        //scH.update();
+        scH.update();
       } catch (ConnectionClosedException e) {
 
       }

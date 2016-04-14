@@ -1,4 +1,5 @@
 #include "servercommandhandler.h"
+#include <iostream>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ void ServerCommandHandler::update() {
       msH.sendCode(Protocol::ANS_END);
     break;
     case Protocol::COM_CREATE_NG:   // create newsgroup
-
+    createNewsGroup();
     msH.sendCode(Protocol::ANS_END);
     break;
     case Protocol::COM_DELETE_NG:   // delete newsgroup
@@ -59,4 +60,8 @@ void ServerCommandHandler::listNewsgroups() {
 
   msH.sendIntParameter(ngs.size());
   msH.sendCode(Protocol::ANS_LIST_NG);
+}
+
+void ServerCommandHandler::createNewsGroup(){
+    cout<<"Hello im here"<<endl;
 }

@@ -39,13 +39,13 @@ public:
   int recvInt();
   int recvIntParameter();
   std::string recvStringParameter();
+  void sendCode(int code);
 
 protected:
 
 private:
   Connection *conn;  // the connection
   void sendByte(int i);
-  void sendCode(int code);
   int recvByte();
 
 
