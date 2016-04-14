@@ -4,7 +4,7 @@
 ** any purpose.
 **
 ** article.h
-** <very brief file description>
+** An article object contains an unique id, a title, an author and a text.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
