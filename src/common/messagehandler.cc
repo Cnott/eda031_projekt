@@ -13,7 +13,7 @@ MessageHandler::MessageHandler(Connection &c){
 }
 
 MessageHandler::~MessageHandler(){
-
+    
 }
 
 void MessageHandler::sendByte(int i) {
@@ -52,7 +52,7 @@ void MessageHandler::sendStringParameter(string param) {
   sendCode(Protocol::PAR_STRING);
   sendInt(param.length());
   for (unsigned int i = 0; i < param.length(); i++) {
-    sendByte(param.find(i));
+    sendByte(param.at(i));
   }
 }
 int MessageHandler::recvCode() {
@@ -69,32 +69,24 @@ int MessageHandler::recvInt() {
 }
 int MessageHandler::recvIntParameter() {
   int code = recvCode();
-  /*
-  if (code != Protocol.PAR_NUM) {
-    throw new ProtocolViolationException("Receive numeric parameter",
-        Protocol.PAR_NUM, code);
+
+  if (code != Protocol::PAR_NUM) {
+    //KASTA FEL
   }
-  */
   return recvInt();
 }
 std::string MessageHandler::recvStringParameter() {
-  /*
   int code = recvCode();
-  if (code != Protocol.PAR_STRING) {
-    throw new ProtocolViolationException("Receive string parameter",
-        Protocol.PAR_STRING, code);
+  if (code != Protocol::PAR_STRING) {
+      //kasta ett fel här
   }
   int n = recvInt();
   if (n < 0) {
-    throw new ProtocolViolationException("Receive string parameter",
-        "Number of characters < 0");
+    //kasta fel här
   }
-  StringBuffer result = new StringBuffer(n);
+  string result;
   for (int i = 1; i <= n; i++) {
-    char ch = (char) conn.read();
-    result.append(ch);
-    logWindow.logChar(ch);
+    result+=conn->read();
   }
-  return result.toString();*/
-    return nullptr;
+  return result;
 }
