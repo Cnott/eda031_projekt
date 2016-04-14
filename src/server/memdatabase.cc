@@ -87,3 +87,14 @@ bool MemDatabase::newsgroupInDB(unsigned int key) {
   return true;
   }
 }
+
+/*
+    Returns true if article with key 'aKey', is in the db, specifically in the
+    newsgroup with key 'ngKey'.
+
+    Pre: Caller has already confirmed that newsgroup with ngKey is in the DB
+*/
+ // Possibly needs a bette solution.
+bool MemDatabase::articleInDB(unsigned int ngKey, unsigned int aKey) {
+  return newsgroupDB.at(ngKey).articleInNG(aKey);
+}

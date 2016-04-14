@@ -37,3 +37,7 @@ map<unsigned int, Article>::iterator Newsgroup::begin() {
 map<unsigned int, Article>::iterator Newsgroup::end() {
   return articles.end();
 }
+
+bool Newsgroup::articleInNG(unsigned int key) {
+  return articles.find(key) != articles.end();
+}

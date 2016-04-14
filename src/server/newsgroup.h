@@ -37,6 +37,8 @@ public:
   const Article& at(unsigned int);
   std::map<unsigned int, Article>::iterator begin();
   std::map<unsigned int, Article>::iterator end();
+
+  bool articleInNG(unsigned int key);       // Possibly needs a bette solution.
 private:
   std::string name;
   unsigned int id;

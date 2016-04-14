@@ -39,6 +39,11 @@ public:
 private:
   void listNewsgroups();
   void createNewsGroup();
+  void deleteNewsGroup();
+  void listArticles();
+  void createArticle();
+  void deleteArticle();
+  void getArticle();
 
   MessageHandler msH;
   Database* db;

@@ -38,8 +38,10 @@ public:
   virtual std::vector<Newsgroup> listNewsGroups() = 0;
   virtual std::vector<Article> listArticles(unsigned int ngId) = 0;
   virtual const Article& getArticle(unsigned int ngID, unsigned int artID) = 0;
-private:
+
+  virtual bool articleInDB(unsigned int ngKey, unsigned int aKey) = 0;  // Possibly needs a bette solution.
   virtual bool newsgroupInDB(unsigned int) = 0;
+private:
 };
 
 #endif

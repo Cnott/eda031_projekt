@@ -46,6 +46,8 @@ public:
   std::vector<Article> listArticles(unsigned int ngId);
   const Article& getArticle(unsigned int ngID, unsigned int artID);
 
+  bool articleInDB(unsigned int ngKey, unsigned int aKey);  // Possibly needs a bette solution.
+
 private:
   bool newsgroupInDB(unsigned int);
   std::map<unsigned int, Newsgroup> newsgroupDB;
