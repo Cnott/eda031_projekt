@@ -1,0 +1,59 @@
+-------------------------------------
+NewsServer
+
+Database db;
+MessageHandler mh;
+Connection conn;
+int ngCounter;
+int artCounter;
+
+int main();
+-------------------------------------
+Database Interface
+
+void saveNewsgroup(String ngName);
+void saveArticle(int ngID, String artName,String author,String text);
+void listNewsGroup();
+void listArticles(int nwId);
+void getArticle(int ngID, artID);
+
+-------------------------------------
+MemDataBase implements Interface
+Map<Id,Newsgroup> news_groups
+
+void saveNewsgroup(String ngName);
+void saveArticle(int ngID, String artName,String author,String text);
+void listNewsGroup();
+void listArticles(int nwId);
+void getArticle(int ngID, artID);
+-------------------------------------
+FileDataBase implements Interface
+
+void saveNewsgroup(String ngName);
+void saveArticle(int ngID, String artName,String author,String text);
+void listNewsGroup();
+void listArticles(int nwId);
+void getArticle(int ngID, artID);
+-------------------------------------
+Newsgroup
+std::string name;
+unsigned int id;
+std::map<unsigned int, Article> articles;
+
+bool add(Article);
+bool remove(unsigned int);
+const Article& at(unsigned int);
+std::map<unsigned int, Article>::iterator begin();
+std::map<unsigned int, Article>::iterator end();
+
+-------------------------------------
+Article
+unsigned int id;
+std::string title;
+std::string author;
+std::string text;
+
+const unsigned int getId();
+const std::string getTitle();
+const std::string getAuthor();
+const std::string getText();

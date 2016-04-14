@@ -74,7 +74,13 @@ public class TestDriver {
 			checkGetArticle(archive.groupAt(0), archive.groupAt(0).articleAt(2));
 
 			checkDeleteArticle(archive.groupAt(0), archive.groupAt(0)
-					.articleAt(0));
+					.articleAt(0));nd();
+		mh.sendCode(Protocol.COM_CREATE_NG);
+		mh.sendStringParameter(title);
+		mh.sendCode(Protocol.COM_END);
+		logWindow.stopSend();
+
+		int errorCode = 0;
 			checkDeleteArticle(archive.groupAt(0), archive.groupAt(0)
 					.articleAt(1));
 			checkListArticles(archive.groupAt(0));

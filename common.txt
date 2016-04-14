@@ -1,0 +1,24 @@
+-------------------------------------
+MessageHandler(Connection conn)
+Connection conn
+
+Private:
+void sendByte(int byte);
+void sendCode(int code);
+Public:
+void setLogWindow(Logger logW);
+void sendCode(int code) {}
+void sendInt(int value) {}
+void sendIntParameter(int param) {}
+void sendStringParameter(std::string param) {}
+int recvCode() {}
+int recvInt() {}
+int recvIntParameter() {}
+std::string recvStringParameter() {}
+-------------------------------------
+Connection
+-------------------------------------
+ConnectionClosedException
+-------------------------------------
+constants
+-------------------------------------
