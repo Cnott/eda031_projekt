@@ -31,6 +31,7 @@ class Newsgroup {
 public:
   Newsgroup(std::string name);
   std::string getName();
+  unsigned int getId();
   bool add(Article);
   bool remove(unsigned int);
   const Article& at(unsigned int);

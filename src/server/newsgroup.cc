@@ -9,6 +9,10 @@ string Newsgroup::getName() {
   return name;
 }
 
+unsigned int Newsgroup::getId() {
+  return id;
+}
+
 bool Newsgroup::add(Article a) {
   if (articles.insert(make_pair(a.getId(),a)).second == false)
     return false;
