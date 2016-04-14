@@ -43,7 +43,7 @@ void ServerCommandHandler::update() {
     case Protocol::COM_END:         // command end
 
     msH.sendCode(Protocol::ANS_END);
-    
+
     break;
   }
 }

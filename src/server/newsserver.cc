@@ -45,7 +45,7 @@ void NewsServer::run(Database& db_in) {
       /*
       *Något i stil med
       *MessageHandler mh=new MessageHandler(conn);
-      *switch(mh.recvCode)
+      *switch(mh.recvCode())
       *
       *case: LIST_NG
       *     mh.recvStringParameter();
