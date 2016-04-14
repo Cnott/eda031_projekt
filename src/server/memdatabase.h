@@ -4,7 +4,8 @@
 ** any purpose.
 **
 ** memdatabase.h
-** <very brief file description>
+** Database that handles newsgroups and articles. Only keeps the objects in
+** in memory and never saves to file.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
@@ -15,6 +16,8 @@
     I N C L U D E S
 -------------------------------------*/
 #include <string>
+#include <vector>
+#include "newsgroup.h"
 
 #include "database.h"
 
@@ -29,17 +32,25 @@
 
 class MemDatabase : public Database {
 public:
-  MemDatabase();
-  ~MemDatabase();
-
-  void saveNewsgroup(std::string ngName);
-  void saveArticle (int ngID, std::string artName, std::string author,
-                            std::string text);
-  void listNewsGroup();
-  void listArticles(int nwId);
-  void getArticle(int ngID, int artID);
+  MemDatabase() {
+    latestNewsgroupID = 0;
+    latestArticleID = 0;
+  }
+  ~MemDatabase() {};
+  bool addNewsgroup(std::string ngName);
+  bool addArticle (unsigned int ngId, std::string title, std::string author, std::string text);
+  bool removeNewsgroup(unsigned int ngId);
+  bool removeArticle(unsigned int ngId, unsigned int aId);
+  std::string getNewsgroupName(unsigned int ngId);
+  std::vector<Newsgroup> listNewsGroups();
+  std::vector<Article> listArticles(unsigned int ngId);
+  const Article& getArticle(unsigned int ngID, unsigned int artID);
 
 private:
+  bool newsgroupInDB(unsigned int);
+  std::map<unsigned int, Newsgroup> newsgroupDB;
+  unsigned int latestNewsgroupID;
+  unsigned int latestArticleID;
 
 };
 

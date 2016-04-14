@@ -3,7 +3,9 @@
 using namespace std;
 
 ServerCommandHandler::ServerCommandHandler(MessageHandler& msH, Database& db)
-  : msH(msH), db(db) {}
+  : msH(msH) {
+    this->db = &db;
+  }
 
 void ServerCommandHandler::update() {
   int cmd = msH.recvCode();
@@ -53,7 +55,7 @@ void ServerCommandHandler::update() {
 
 void ServerCommandHandler::listNewsgroups() {
   msH.sendCode(Protocol::ANS_LIST_NG);
-  vector<Newsgroup> ngs = db.listNewsGroup();
+  vector<Newsgroup> ngs = db->listNewsGroups();
 
   msH.sendIntParameter(ngs.size());
   msH.sendCode(Protocol::ANS_LIST_NG);

@@ -19,6 +19,7 @@
 #include "../common/constants.h"
 #include "../server/newsgroup.h"
 #include "../common/messagehandler.h"
+#include "memdatabase.h"
 
 using namespace std;
 
@@ -43,12 +44,31 @@ int main() {
 
 
 
-  Newsgroup nn ("Nature News");
-  nn.add(a1); nn.add(a2); nn.add(a3); nn.add(a4);
-  for (auto it : nn) {
-    cout << "Author: " << it.second.getAuthor() << endl;
-    cout << "Title: " << it.second.getTitle() << endl;
-    cout << "Text: " << it.second.getText() << endl;
+  // Newsgroup nn ("Nature News");
+  // nn.add(a1); nn.add(a2); nn.add(a3); nn.add(a4);
+  // for (auto it : nn) {
+  //   cout << "Author: " << it.second.getAuthor() << endl;
+  //   cout << "Title: " << it.second.getTitle() << endl;
+  //   cout << "Text: " << it.second.getText() << endl;
+  //   cout << "\n" << endl;
+  // }
+
+  MemDatabase memoryDB;
+  memoryDB.addNewsgroup("Nature News");
+  cout << memoryDB.getNewsgroupName(0) << endl;
+  memoryDB.addArticle(0, "National Neographics: Giraffe", "Lasse Åberg", "This article is about giraffes.");
+  memoryDB.addArticle(0, "National Neographics: Hippopotumus", "Scott Manley", "This article is about hippopotumuses.");
+  memoryDB.addArticle(0, "National Neographics: Lion", "Mr Smith", "This article is about lions.");
+  memoryDB.addArticle(0, aTitle, aAuthor, aText);
+  vector<Newsgroup> newsgroups = memoryDB.listNewsGroups();
+  vector<Article> articles = memoryDB.listArticles(0);
+  for (auto it : newsgroups) {
+    cout << it.getName() << endl;
+  }
+  for (auto it : articles) {
+    cout << "Author: " << it.getAuthor() << endl;
+    cout << "Title: " << it.getTitle() << endl;
+    cout << "Text: " << it.getText() << endl;
     cout << "\n" << endl;
   }
 }

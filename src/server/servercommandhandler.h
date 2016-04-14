@@ -40,7 +40,7 @@ private:
   void listNewsgroups();
 
   MessageHandler msH;
-  Database db;
+  Database* db;
 };
 
 #endif

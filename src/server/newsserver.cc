@@ -20,7 +20,7 @@ NewsServer::NewsServer(int argc, char* argv[]) {
 NewsServer::~NewsServer() {}
 
 void NewsServer::run(Database& db_in) {
-  Database db = db_in;
+  Database* db = &db_in;
   Server server(port);
 
   if (!server.isReady()) {
