@@ -28,11 +28,7 @@ all: $(PROGS)
 
 # Targets rely on implicit rules for compiling and linking
 $(SERVER)testMain: $(SERVER)testMain.o $(SERVER)article.o $(SERVER)newsgroup.o
-<<<<<<< HEAD
-$(SERVER)newsserver_memory: $(SERVER)newsserver_memory.o $(SERVER)newsserver.o $(SERVER)server.o $(SERVER)memdatabase.o $(COMMON)messagehandler.o $(COMMON)connection.o
-=======
 $(SERVER)newsserver_memory: $(SERVER)newsserver_memory.o $(SERVER)newsserver.o $(SERVER)server.o $(SERVER)memdatabase.o $(COMMON)connection.o $(COMMON)messagehandler.o 
->>>>>>> 93275fce8c6dffe90b243ce10d65002886b2254a
 
 
 # Phony targets
