@@ -1,5 +1,7 @@
 #include "servercommandhandler.h"
 
+using namespace std;
+
 ServerCommandHandler::ServerCommandHandler(MessageHandler& msH, Database& db)
   : msH(msH), db(db) {}
 
@@ -8,8 +10,9 @@ void ServerCommandHandler::update() {
 
   switch (cmd) {
     case Protocol::COM_LIST_NG:     // list newsgroups
+      listNewsgroups();
 
-    msH.sendCode(Protocol::ANS_END);
+      msH.sendCode(Protocol::ANS_END);
     break;
     case Protocol::COM_CREATE_NG:   // create newsgroup
 
@@ -46,4 +49,12 @@ void ServerCommandHandler::update() {
 
     break;
   }
+}
+
+void ServerCommandHandler::listNewsgroups() {
+  msH.sendCode(Protocol::ANS_LIST_NG);
+  vector<Newsgroup> ngs = db.listNewsGroup();
+
+  msH.sendIntParameter(ngs.size());
+  msH.sendCode(Protocol::ANS_LIST_NG);
 }

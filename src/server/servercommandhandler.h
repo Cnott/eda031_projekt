@@ -17,6 +17,9 @@
 #include "../common/messagehandler.h"
 #include "../common/protocol.h"
 #include "database.h"
+#include "newsgroup.h"
+
+#include <vector>
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -34,6 +37,8 @@ public:
 
 
 private:
+  void listNewsgroups();
+
   MessageHandler msH;
   Database db;
 };
