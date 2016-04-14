@@ -11,11 +11,15 @@ int main();
 -------------------------------------
 Database Interface
 
-void saveNewsgroup(String ngName);
-void saveArticle(int ngID, String artName,String author,String text);
-void listNewsGroup();
-void listArticles(int nwId);
-void getArticle(int ngID, artID);
+Database();
+virtual ~Database();
+
+virtual void saveNewsgroup(std::string ngName);
+virtual void saveArticle (int ngID, std::string artName, std::string author,
+                          std::string text);
+virtual void listNewsGroup();
+virtual void listArticles(int nwId);
+virtual void getArticle(int ngID, int artID);
 
 -------------------------------------
 MemDataBase implements Interface
