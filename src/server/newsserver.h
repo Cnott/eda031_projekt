@@ -22,6 +22,7 @@
 #include "../common/connection.h"
 #include "../common/connectionclosedexception.h"
 #include "../common/messagehandler.h"
+#include "database.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -40,6 +41,7 @@ public:
 
 private:
   int port = -1;
+  Database db;
 };
 
 #endif

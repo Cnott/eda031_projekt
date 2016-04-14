@@ -3,18 +3,20 @@
 ** support, and with no warranty, express or implied, as to its usefulness for
 ** any purpose.
 **
-** database.h
+** memdatabase.h
 ** <very brief file description>
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef MEMDATABASE_H
+#define MEMDATABASE_H
 
 /*-------------------------------------
     I N C L U D E S
 -------------------------------------*/
 #include <string>
+
+#include "database.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -25,17 +27,17 @@
     C L A S S   D E F
 -------------------------------------*/
 
-class Database {
+class MemDatabase : public Database {
 public:
-  Database();
-  virtual ~Database();
+  MemDatabase();
+  ~MemDatabase();
 
-  virtual void saveNewsgroup(std::string ngName);
-  virtual void saveArticle (int ngID, std::string artName, std::string author,
+  void saveNewsgroup(std::string ngName);
+  void saveArticle (int ngID, std::string artName, std::string author,
                             std::string text);
-  virtual void listNewsGroup();
-  virtual void listArticles(int nwId);
-  virtual void getArticle(int ngID, int artID);
+  void listNewsGroup();
+  void listArticles(int nwId);
+  void getArticle(int ngID, int artID);
 
 private:
 

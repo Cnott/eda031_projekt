@@ -6,6 +6,7 @@ MessageHandler mh;
 Connection conn;
 int ngCounter;
 int artCounter;
+int port;
 
 int main();
 -------------------------------------
