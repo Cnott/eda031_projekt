@@ -96,9 +96,9 @@ void ServerCommandHandler::deleteNewsGroup() {
 */
 void ServerCommandHandler::listArticles() {
   unsigned int groupId = msH.recvIntParameter();      // num_p
-
+  msH.sendCode(Protocol::ANS_LIST_ART);
   if (db->newsgroupInDB(groupId)) {
-    msH.sendCode(Protocol::ANS_LIST_ART);             // ANS_LIST_ART
+                 // ANS_LIST_ART
     msH.sendCode(Protocol::ANS_ACK);                  // ANS_ACK
 
     vector<Article> articles = db->listArticles(groupId);
