@@ -10,7 +10,6 @@ ServerCommandHandler::ServerCommandHandler(MessageHandler& msH, Database& db)
 
 void ServerCommandHandler::update() {
   int cmd = msH.recvCode();
-
   switch (cmd) {
     case Protocol::COM_LIST_NG:     // list newsgroups
       listNewsgroups();
@@ -37,7 +36,6 @@ void ServerCommandHandler::update() {
       // not really needed atm, but keeping "in case shit"
       break;
   }
-
 }
 /*
     COM_LIST_NG COM_END

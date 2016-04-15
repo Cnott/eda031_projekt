@@ -3,18 +3,13 @@
 using namespace std;
 
 bool MemDatabase::addNewsgroup(string ngName){
-<<<<<<< HEAD
-  Newsgroup ng(ngName,latestNewsgroupID);
+  Newsgroup ng(latestNewsgroupID,ngName);
   //checking if the name already exists
   for(auto it=newsgroupDB.begin();it!=newsgroupDB.end();it++){
     if(it->second.getName()==ngName){
       return false;
     }
   }
-
-=======
-  Newsgroup ng(latestNewsgroupID, ngName);
->>>>>>> 12aaf3eb11915f6e4de8f19355bb78a8fb7ec833
   if (newsgroupDB.insert(make_pair(latestNewsgroupID,ng)).second) {
     // Succesfully added ng to newsgroups.
     ++latestNewsgroupID;
@@ -28,7 +23,7 @@ bool MemDatabase::addNewsgroup(string ngName){
 bool MemDatabase::addArticle (unsigned int ngId, string title, string author, string text) {
   Article a1(latestArticleID, title, author, text);
   if (!newsgroupInDB(ngId))
-   return false; 
+   return false;
   if (newsgroupDB.at(ngId).add(a1)) {
     // Succesfully added a1 to articles in ngId.
     ++latestArticleID;

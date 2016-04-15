@@ -18,18 +18,20 @@ LDFLAGS   = -g -L..
 OUTPUT = bin/
 SERVER = src/server/
 COMMON = src/common/
+CLIENT = src/client/
 
 # Targets
-PROGS = $(SERVER)testMain $(SERVER)newsserver_memory
+PROGS = $(SERVER)testMain $(SERVER)newsserver_memory $(CLIENT)clientMain
 
 all: $(PROGS)
 	mv $(SERVER)testMain $(OUTPUT)
 	mv $(SERVER)newsserver_memory $(OUTPUT)
+	mv $(CLIENT)clientMain $(OUTPUT)client
 
 # Targets rely on implicit rules for compiling and linking
 $(SERVER)testMain: $(SERVER)testMain.o $(SERVER)article.o $(SERVER)newsgroup.o $(SERVER)memdatabase.o
 $(SERVER)newsserver_memory: $(SERVER)newsserver_memory.o $(SERVER)newsserver.o $(SERVER)server.o $(SERVER)article.o $(SERVER)newsgroup.o $(SERVER)memdatabase.o $(COMMON)connection.o $(COMMON)messagehandler.o $(SERVER)servercommandhandler.o
-
+$(CLIENT)clientMain: $(CLIENT)clientMain.o
 
 # Phony targets
 .PHONY: all clean
@@ -41,9 +43,9 @@ clean:
 	rm -f $(SERVER)*.d
 	rm -f $(COMMON)*.o
 	rm -f $(COMMON)*.d
-	rm -f $(OUTPUT)testMain
-	rm -f $(OUTPUT)newsserver_memory
-
+	rm -f $(CLIENT)*.o
+	rm -f $(CLIENT)*.d
+	rm -f $(OUTPUT)*
 # Generate dependencies in *.d files
 %.d: %.cc
 	@set -e; rm -f $@; \
