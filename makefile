@@ -31,7 +31,7 @@ all: $(PROGS)
 # Targets rely on implicit rules for compiling and linking
 $(SERVER)testMain: $(SERVER)testMain.o $(SERVER)article.o $(SERVER)newsgroup.o $(SERVER)memdatabase.o
 $(SERVER)newsserver_memory: $(SERVER)newsserver_memory.o $(SERVER)newsserver.o $(SERVER)server.o $(SERVER)article.o $(SERVER)newsgroup.o $(SERVER)memdatabase.o $(COMMON)connection.o $(COMMON)messagehandler.o $(SERVER)servercommandhandler.o
-$(CLIENT)clientMain: $(CLIENT)clientMain.o
+$(CLIENT)clientMain: $(CLIENT)clientMain.o $(COMMON)connection.o $(COMMON)messagehandler.o $(CLIENT)clientcommandhandler.o
 
 # Phony targets
 .PHONY: all clean
