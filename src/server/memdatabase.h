@@ -33,8 +33,8 @@
 class MemDatabase : public Database {
 public:
   MemDatabase() {
-    latestNewsgroupID = 0;
-    latestArticleID = 0;
+    latestNewsgroupID = 1;
+    latestArticleID = 1;
   }
   ~MemDatabase() {};
   bool addNewsgroup(std::string ngName);

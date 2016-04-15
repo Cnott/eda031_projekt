@@ -56,6 +56,7 @@ int main() {
   MemDatabase memoryDB;
   memoryDB.addNewsgroup("Nature News");
   cout << memoryDB.getNewsgroupName(0) << endl;
+  //cout << memoryDB.at(1).getId() << endl;
   memoryDB.addArticle(0, "National Neographics: Giraffe", "Lasse Åberg", "This article is about giraffes.");
   memoryDB.addArticle(0, "National Neographics: Hippopotumus", "Scott Manley", "This article is about hippopotumuses.");
   memoryDB.addArticle(0, "National Neographics: Lion", "Mr Smith", "This article is about lions.");

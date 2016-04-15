@@ -3,7 +3,7 @@
 using namespace std;
 
 bool MemDatabase::addNewsgroup(string ngName){
-  Newsgroup ng(ngName);
+  Newsgroup ng(latestNewsgroupID, ngName);
   if (newsgroupDB.insert(make_pair(latestNewsgroupID,ng)).second) {
     // Succesfully added ng to newsgroups.
     ++latestNewsgroupID;

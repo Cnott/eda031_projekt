@@ -1,7 +1,8 @@
 #include "newsgroup.h"
 
 using namespace std;
-Newsgroup::Newsgroup(string name) {
+Newsgroup::Newsgroup(unsigned int id, string name) {
+  this->id = id;
   this->name = name;
 }
 
