@@ -17,8 +17,14 @@
 -------------------------------------*/
 #include <string>
 #include <vector>
-#include "newsgroup.h"
+#include <dirent.h>
+#include <iostream>
+#include <vector>
 
+//#include <sys/types.h>
+#include <sys/stat.h>
+
+#include "newsgroup.h"
 #include "database.h"
 
 /*-------------------------------------
@@ -32,10 +38,7 @@
 
 class DiskDatabase : public Database {
 public:
-  DiskDatabase() {
-    latestNewsgroupID = 1;
-    latestArticleID = 1;
-  }
+  DiskDatabase();
   ~DiskDatabase() {};
   bool addNewsgroup(std::string ngName) {}
   bool addArticle (unsigned int ngId, std::string title, std::string author, std::string text) {}
@@ -54,6 +57,9 @@ private:
   unsigned int latestNewsgroupID;
   unsigned int latestArticleID;
 
+  void infoDatabase();
+  struct dirent *DirEntry;
+  char* dbRoot = "database/";
 };
 
 #endif
