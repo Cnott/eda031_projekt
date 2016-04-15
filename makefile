@@ -21,16 +21,18 @@ COMMON = src/common/
 CLIENT = src/client/
 
 # Targets
-PROGS = $(SERVER)testMain $(SERVER)newsserver_memory $(CLIENT)clientMain
+PROGS = $(SERVER)testMain $(SERVER)newsserver_memory $(CLIENT)clientMain $(SERVER)newsserver_disk
 
 all: $(PROGS)
 	mv $(SERVER)testMain $(OUTPUT)
 	mv $(SERVER)newsserver_memory $(OUTPUT)
+	mv $(SERVER)newsserver_disk $(OUTPUT)
 	mv $(CLIENT)clientMain $(OUTPUT)client
 
 # Targets rely on implicit rules for compiling and linking
 $(SERVER)testMain: $(SERVER)testMain.o $(SERVER)article.o $(SERVER)newsgroup.o $(SERVER)memdatabase.o
 $(SERVER)newsserver_memory: $(SERVER)newsserver_memory.o $(SERVER)newsserver.o $(SERVER)server.o $(SERVER)article.o $(SERVER)newsgroup.o $(SERVER)memdatabase.o $(COMMON)connection.o $(COMMON)messagehandler.o $(SERVER)servercommandhandler.o
+$(SERVER)newsserver_disk: $(SERVER)newsserver_disk.o $(SERVER)newsserver.o $(SERVER)server.o $(SERVER)article.o $(SERVER)newsgroup.o $(SERVER)diskdatabase.o $(COMMON)connection.o $(COMMON)messagehandler.o $(SERVER)servercommandhandler.o
 $(CLIENT)clientMain: $(CLIENT)clientMain.o $(COMMON)connection.o $(COMMON)messagehandler.o $(CLIENT)clientcommandhandler.o
 
 # Phony targets
