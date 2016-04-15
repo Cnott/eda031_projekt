@@ -37,13 +37,13 @@ public:
   std::string update(std::pair<int,std::vector<std::string>>&);
 
 private:
-  void listNewsgroups();
-  void createNewsGroup();
-  void deleteNewsGroup();
-  void listArticles();
-  void createArticle();
-  void deleteArticle();
-  void getArticle();
+  std::string listNewsgroups();
+  void createNewsGroup(std::vector<std::string> &);
+  void deleteNewsGroup(std::vector<std::string> &);
+  void listArticles(std::vector<std::string> &);
+  void createArticle(std::vector<std::string> &);
+  void deleteArticle(std::vector<std::string> &);
+  void getArticle(std::vector<std::string> &);
 
   MessageHandler msH;
 };
