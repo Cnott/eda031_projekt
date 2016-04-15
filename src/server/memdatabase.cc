@@ -3,6 +3,7 @@
 using namespace std;
 
 bool MemDatabase::addNewsgroup(string ngName){
+<<<<<<< HEAD
   Newsgroup ng(ngName,latestNewsgroupID);
   //checking if the name already exists
   for(auto it=newsgroupDB.begin();it!=newsgroupDB.end();it++){
@@ -11,6 +12,9 @@ bool MemDatabase::addNewsgroup(string ngName){
     }
   }
 
+=======
+  Newsgroup ng(latestNewsgroupID, ngName);
+>>>>>>> 12aaf3eb11915f6e4de8f19355bb78a8fb7ec833
   if (newsgroupDB.insert(make_pair(latestNewsgroupID,ng)).second) {
     // Succesfully added ng to newsgroups.
     ++latestNewsgroupID;

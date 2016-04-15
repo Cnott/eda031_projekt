@@ -29,7 +29,7 @@
 
 class Newsgroup {
 public:
-  Newsgroup(std::string name,unsigned int);
+  Newsgroup(unsigned int, std::string name);
   std::string getName();
   unsigned int getId();
   bool add(Article);
