@@ -61,7 +61,7 @@ int main() {
   memoryDB.addArticle(0, "National Neographics: Hippopotumus", "Scott Manley", "This article is about hippopotumuses.");
   memoryDB.addArticle(0, "National Neographics: Lion", "Mr Smith", "This article is about lions.");
   memoryDB.addArticle(0, aTitle, aAuthor, aText);
-  vector<Newsgroup> newsgroups = memoryDB.listNewsGroups();
+  vector<Newsgroup> newsgroups = memoryDB.listNewsgroups();
   vector<Article> articles = memoryDB.listArticles(0);
   for (auto it : newsgroups) {
     cout << it.getName() << endl;

@@ -8,18 +8,19 @@
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
-#ifndef SERVERCOMMANDHANDLER_H
-#define SERVERCOMMANDHANDLER_H
+#ifndef CLIENTCOMMANDHANDLER_H
+#define CLIENTCOMMANDHANDLER_H
+
+#include <utility>
+#include <vector>
+#include <string>
+#include "../common/protocol.h"
 
 /*-------------------------------------
     I N C L U D E S
 -------------------------------------*/
 #include "../common/messagehandler.h"
 #include "../common/protocol.h"
-#include "database.h"
-#include "newsgroup.h"
-
-#include <vector>
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -30,23 +31,21 @@
     C L A S S   D E F
 -------------------------------------*/
 
-class ServerCommandHandler {
+class ClientCommandHandler {
 public:
-  ServerCommandHandler(MessageHandler&, Database&);
-  void update();
-
+  ClientCommandHandler(MessageHandler& mh): msH(mh) {}
+  std::string update(std::pair<int,std::vector<std::string> >);
 
 private:
-  void listNewsgroups();
-  void createNewsgroup();
-  void deleteNewsgroup();
-  void listArticles();
-  void createArticle();
-  void deleteArticle();
-  void getArticle();
+  std::string listNewsgroups();
+  void createNewsGroup(std::vector<std::string> &);
+  void deleteNewsGroup(std::vector<std::string> &);
+  void listArticles(std::vector<std::string> &);
+  void createArticle(std::vector<std::string> &);
+  void deleteArticle(std::vector<std::string> &);
+  void getArticle(std::vector<std::string> &);
 
   MessageHandler msH;
-  Database* db;
 };
 
 #endif

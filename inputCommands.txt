@@ -1,0 +1,27 @@
+//list newsgroups
+list
+COM_LIST_NG
+
+//create Newsgroup
+create "ngName"
+COM_CREATE_NG vector[0]=ngName
+
+//delete newsgroup
+delete "ngName"
+COM_DELETE_NG vector[0]=ngName
+
+//list articles in a ng
+list "ngName"
+COM_LIST_ART "ngName"
+
+//create article
+create ngName artTitle artAuth text
+COM_CREATE_ART vector[0]=ngName vector[1]=artTitle vector[2]=artAuth vector[3]=text
+
+//delete article
+delete artId
+COM_DELETE_NG vector[1]=artId
+
+//read an article
+read artId
+COM_GET_ART vector[0]=artId

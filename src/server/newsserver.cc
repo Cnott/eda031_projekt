@@ -34,24 +34,16 @@ void NewsServer::run(Database& db_in) {
 
     if (conn != nullptr) {
       // handle messages
-      MessageHandler msH(*conn.get());
-      ServerCommandHandler scH(msH, *db);
+
 
       try {
+        MessageHandler msH(*conn.get());
+        ServerCommandHandler scH(msH, *db);
         scH.update();
       } catch (ConnectionClosedException e) {
-
+        server.deregisterConnection(conn);
+        cout<<"Client closed the connection"<<endl;
       }
-      /*
-      *Något i stil med
-      *MessageHandler mh=new MessageHandler(conn);
-      *switch(mh.recvCode())
-      *
-      *case: LIST_NG
-      *     mh.recvStringParameter();
-      *     String result=db.listNewsgroups();
-      *     mh.sendStringParameter(code+resulst+end)
-      */
     } else {
       conn = make_shared<Connection>();
       server.registerConnection(conn);
