@@ -232,19 +232,11 @@ const Article& DiskDatabase::getArticle(unsigned int ngID, unsigned int artID) {
   ifstream ifs(path, ifstream::in);
   getline(ifs, title);
   getline(ifs, author);
-<<<<<<< HEAD
-  string line = "";
-  while (getline(ifs, line)) {
-    text.append(line);
-    text.append("\n");
-  }
-=======
   stringstream buffer;
   buffer << ifs.rdbuf();
   text = buffer.str();
->>>>>>> 71bf984906e291f723969817850338fbb5219c70
 
-tmpArticle = Article(artID, title, author, text);
+  tmpArticle = Article(artID, title, author, text);
 
-return tmpArticle;
+  return tmpArticle;
 }
