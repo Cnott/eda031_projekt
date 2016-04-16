@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 DiskDatabase::DiskDatabase() : tmpArticle(0, "", "", ""){
   latestNewsgroupID = 0;
@@ -11,37 +11,6 @@ DiskDatabase::DiskDatabase() : tmpArticle(0, "", "", ""){
   initDatabase();
 
   if (DEBUG) print();
-
-  // check if in db
-  // if (newsgroupInDB("comp.lang.c++")) cout << "found comp.lang.c++" << endl;
-  //
-  // // try adding to db
-  // if (addNewsgroup("test.ng.1")) {
-  //   if (newsgroupInDB("test.ng.1")) cout << "created test.ng.1" << endl;
-  // } else {
-  //   cout << "test.ng.1 was already in the database" << endl;
-  // }
-
-  // try adding article
-  // if (addArticle(latestNewsgroupID, "Article 1", "Author Name",
-  //                "This is the text of the article")) cout <<
-  //   "Added Article " << latestArticleID << " to ng "  << latestNewsgroupID << endl;
-  //
-  // if(removeArticle(6, 7))
-  //   cout << "removed article" << endl;
-  //else
-  //  cout << "failed to remove article" << endl;
-
-  Article tmp = getArticle(6, 10);
-  cout << endl << tmp.getTitle() << endl << tmp.getAuthor() << endl << tmp.getText() << endl;
-
-  removeNewsgroup(6);
-
-  vector<Newsgroup> ngDB = listNewsgroups();
-  for (Newsgroup ng : ngDB) {
-    cout << ng.getId() << " - " << ng.getName() << endl;
-  }
-
   saveDBInfo();
 }
 
@@ -203,31 +172,12 @@ void DiskDatabase::initDatabase() {
 }
 
 void DiskDatabase::print() {
-  DIR *ngDir;
-  dirent *ng_dirent;
-  dirent *art_dirent;
-
-  rewinddir(dbRootDir);
-  cout << endl << "Database Contents:" << endl;
-
-  while (ng_dirent = readdir(dbRootDir)) {
-    string ngId = ng_dirent->d_name;
-
-    if (!(ngId == "." | ngId == "..") && (ng_dirent->d_type == isDir)) {
-      cout << getNewsgroupName(stoul(ngId)) << " ";
-      string ngRoot = dbRoot;
-      ngRoot += "/" + ngId;
-      ngDir   = opendir(ngRoot.c_str());
-      cout << endl;
-
-      while (art_dirent = readdir(ngDir)) {
-        string artId = art_dirent->d_name;
-
-        if (art_dirent->d_type != isDir && artId != ".dbinfo") {
-          cout << artId << " ";
-        }
-      }
-      cout << endl;
+  vector<Newsgroup> ngDB= listNewsgroups();
+  for (auto ng : ngDB) {
+    cout << ng.getName() << endl;
+    vector<Article> artDB = listArticles(ng.getId());
+    for (auto a : artDB) {
+      cout << a.getTitle() << " ";
     }
   }
 }
@@ -282,11 +232,17 @@ const Article& DiskDatabase::getArticle(unsigned int ngID, unsigned int artID) {
   ifstream ifs(path, ifstream::in);
   getline(ifs, title);
   getline(ifs, author);
+<<<<<<< HEAD
   string line = "";
   while (getline(ifs, line)) {
     text.append(line);
     text.append("\n");
   }
+=======
+  stringstream buffer;
+  buffer << ifs.rdbuf();
+  text = buffer.str();
+>>>>>>> 71bf984906e291f723969817850338fbb5219c70
 
 tmpArticle = Article(artID, title, author, text);
 

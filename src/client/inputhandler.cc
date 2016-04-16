@@ -106,6 +106,11 @@ vector<string> InputHandler::readFromFile(string filePath) {
   ifstream myFile (filePath);
   vector<string> rsv;           //return string vector
 
+  //ifstream file(input.c_str());
+  //stringstream buffer;
+  //buffer << file.rdbuf();
+  //string str = buffer.str();
+
   if (myFile.is_open()) {
     for (int i = 1; i != 3; i++) { //adds first two lines i.e. title & author
       getline(myFile, line);

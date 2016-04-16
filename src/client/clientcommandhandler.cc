@@ -3,7 +3,7 @@
 using namespace std;
 
 
-string ClientCommandHandler::update(pair<int,vector<string>> &input){
+string ClientCommandHandler::update(pair<int,vector<string> > input){
   int cmd = input.first;
   switch (cmd) {
     case Protocol::COM_LIST_NG:     // list newsgroups
