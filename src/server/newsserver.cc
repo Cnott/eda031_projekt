@@ -34,13 +34,15 @@ void NewsServer::run(Database& db_in) {
 
     if (conn != nullptr) {
       // handle messages
-      MessageHandler msH(*conn.get());
-      ServerCommandHandler scH(msH, *db);
+
 
       try {
+        MessageHandler msH(*conn.get());
+        ServerCommandHandler scH(msH, *db);
         scH.update();
       } catch (ConnectionClosedException e) {
-
+        server.deregisterConnection(conn);
+        cout<<"Client closed the connection"<<endl;
       }
     } else {
       conn = make_shared<Connection>();

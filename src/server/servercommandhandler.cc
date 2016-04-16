@@ -53,6 +53,8 @@ void ServerCommandHandler::listNewsgroups() {
   msH.sendCode(Protocol::ANS_END);                    // ANS_END
 }
 
+
+
 /*
     COM_CREATE_NG string_p COM_END
     ANS_CREATE_NG [ANS_ACK | ANS_NAK ERR_NG_ALREADY_EXISTS] ANS_END

@@ -42,7 +42,7 @@ public:
   bool removeNewsgroup(unsigned int ngId);
   bool removeArticle(unsigned int ngId, unsigned int aId);
   std::string getNewsgroupName(unsigned int ngId);
-  std::vector<Newsgroup> listNewsGroups();
+  std::vector<Newsgroup> listNewsgroups();
   std::vector<Article> listArticles(unsigned int ngId);
   const Article& getArticle(unsigned int ngID, unsigned int artID);
 
