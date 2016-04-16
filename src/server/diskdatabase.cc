@@ -83,7 +83,6 @@ bool DiskDatabase::addArticle(unsigned int ngId,
 }
 
 vector<Newsgroup> DiskDatabase::listNewsgroups() {
-  cout << "got into listNewsgroups.. " << endl;
   dirent *ng_dirent;
 
   vector<Newsgroup> ngDB;
