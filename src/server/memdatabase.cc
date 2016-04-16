@@ -64,7 +64,7 @@ string MemDatabase::getNewsgroupName(unsigned int ngId) {
   return newsgroupDB.at(ngId).getName();
 }
 
-vector<Newsgroup>  MemDatabase::listNewsGroups(){
+vector<Newsgroup>  MemDatabase::listNewsgroups(){
   vector<Newsgroup> newsVector;
   for(auto it : newsgroupDB) { //iterate newsgroups
     newsVector.push_back(it.second);
