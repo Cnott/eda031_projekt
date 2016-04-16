@@ -61,6 +61,7 @@ bool DiskDatabase::addNewsgroup(string name) {
   mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
   saveNewsgroupInfo(path.append("/"), name);
 
+  saveDBInfo();
   return true;
 }
 
@@ -77,6 +78,7 @@ bool DiskDatabase::addArticle(unsigned int ngId,
   ofs << title << endl << author  << endl << text;
   ofs.close();
 
+  saveDBInfo();
   return true;
 }
 
@@ -85,6 +87,7 @@ vector<Newsgroup> DiskDatabase::listNewsgroups() {
   dirent *ng_dirent;
 
   vector<Newsgroup> ngDB;
+  list<unsigned int> ngOrder;
 
   rewinddir(dbRootDir);
   while (ng_dirent = readdir(dbRootDir)) {
@@ -92,9 +95,15 @@ vector<Newsgroup> DiskDatabase::listNewsgroups() {
 
     if (!(ngIdStr == "." | ngIdStr == "..") && (ng_dirent->d_type == isDir)) {
       unsigned int ngId = stoul(ngIdStr);
-      Newsgroup ng(ngId, getNewsgroupName(ngId));
-      ngDB.push_back(ng);
+      ngOrder.push_back(ngId);
     }
+  }
+
+  ngOrder.sort();
+
+  for (unsigned int i : ngOrder) {
+    Newsgroup ng(i, getNewsgroupName(i));
+    ngDB.push_back(ng);
   }
 
   return ngDB;
@@ -142,7 +151,9 @@ bool DiskDatabase::removeNewsgroup(unsigned int ngId) {
     }
   }
 
-  return rmdir(ngRoot.c_str()) != 0;
+  rmdir(ngRoot.c_str());
+
+  return true;
 }
 
 void DiskDatabase::saveNewsgroupInfo(string path, string name) {
@@ -235,6 +246,34 @@ string DiskDatabase::getNewsgroupName(unsigned int ngId) {
   return ngName;
 }
 
+vector<Article> DiskDatabase::listArticles(unsigned int ngId) {
+  string path = dbRoot;
+  path.append(to_string(ngId) + "/");
+
+  DIR* ngDir;
+  dirent* art_dirent;
+  ngDir = opendir(path.c_str());
+
+
+  list<unsigned int> artOrder;
+  while (art_dirent = readdir(ngDir)) {
+    string artId = art_dirent->d_name;
+    if (artId != "." && artId != ".." && artId != ".dbinfo") {
+      artOrder.push_back(stoul(artId));
+    }
+  }
+
+  artOrder.sort();
+
+  vector<Article> articles;
+  for (unsigned int i : artOrder) {
+    Article art = getArticle(ngId, i);
+    articles.push_back(art);
+  }
+
+  return articles;
+}
+
 const Article& DiskDatabase::getArticle(unsigned int ngID, unsigned int artID) {
   string title, author;
   string text = "";
@@ -247,9 +286,10 @@ const Article& DiskDatabase::getArticle(unsigned int ngID, unsigned int artID) {
   string line = "";
   while (getline(ifs, line)) {
     text.append(line);
-    line = "";
+    line = "\n";
   }
 
 tmpArticle = Article(artID, title, author, text);
+
 return tmpArticle;
 }

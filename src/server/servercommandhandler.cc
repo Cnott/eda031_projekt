@@ -102,8 +102,10 @@ void ServerCommandHandler::listArticles() {
     msH.sendCode(Protocol::ANS_ACK);                  // ANS_ACK
 
     vector<Article> articles = db->listArticles(groupId);
+    cout << "got into cmdH.listArticles. Size = " <<  articles.size() << endl;
     msH.sendIntParameter(articles.size());            // num_p
     for (auto a : articles) {
+      cout << a.getTitle() << endl;
       msH.sendIntParameter(a.getId());                // [num_p
       msH.sendStringParameter(a.getTitle());          // string_p]
     }

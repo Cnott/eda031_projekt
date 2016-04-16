@@ -21,6 +21,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <list>
 
 //#include <sys/types.h>
 #include <sys/stat.h>
@@ -48,7 +49,7 @@ public:
   bool removeArticle(unsigned int ngId, unsigned int aId);
   std::string getNewsgroupName(unsigned int ngId);
   std::vector<Newsgroup> listNewsgroups();
-  std::vector<Article> listArticles(unsigned int ngId) {}
+  std::vector<Article> listArticles(unsigned int ngId);
   const Article& getArticle(unsigned int ngID, unsigned int artID);
   //Article getArticle(unsigned int ngID, unsigned int artID);
 
