@@ -1,5 +1,5 @@
 #include "clientcommandhandler.h"
-
+#include <iostream>
 using namespace std;
 
 
@@ -42,17 +42,18 @@ string ClientCommandHandler::listNewsgroups(){
   msH.sendCode(Protocol::COM_END);
 
   //hämtar resultatet
-  msH.recvCode();
-  int nbrNgs=msH.recvInt();
+  msH.recvCode();                 //hämtar ANS_LIST_NG
+  unsigned int nbrNgs=msH.recvIntParameter();       //hämtar group size
   string result;
-  for(int i=0;i!=nbrNgs;i++){
-    msH.recvIntParameter();
-    result+=msH.recvStringParameter();
+  for(unsigned int i=0;i!=nbrNgs;i++){
+    result.append(to_string(msH.recvIntParameter())+". ");
+    result.append(msH.recvStringParameter()+"\n");
   }
   return result;
 }
 
-void ClientCommandHandler::createNewsGroup(vector<string> &input){
+string ClientCommandHandler::createNewsGroup(vector<string> &input){
+  cout<<input[0]<<endl;
   msH.sendCode(Protocol::COM_CREATE_NG);
   msH.sendStringParameter(input[0]);
   msH.sendCode(Protocol::COM_END);
@@ -61,13 +62,14 @@ void ClientCommandHandler::createNewsGroup(vector<string> &input){
   if(msH.recvCode()==Protocol::ANS_ACK){
     //it worked
   }
+  return "";
 }
-void ClientCommandHandler::deleteNewsGroup(vector<string> &input){
+string ClientCommandHandler::deleteNewsGroup(vector<string> &input){
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
 
   msH.recvCode();
-  int nbrNgs=msH.recvInt();
+  int nbrNgs=msH.recvIntParameter();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -87,12 +89,12 @@ void ClientCommandHandler::deleteNewsGroup(vector<string> &input){
     //it worked
   }
 }
-void ClientCommandHandler::listArticles(vector<string> &input){
+string ClientCommandHandler::listArticles(vector<string> &input){
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
 
   msH.recvCode();
-  int nbrNgs=msH.recvInt();
+  int nbrNgs=msH.recvIntParameter();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -110,13 +112,14 @@ void ClientCommandHandler::listArticles(vector<string> &input){
 
   //måste hämta svaret
 }
-void ClientCommandHandler::createArticle(vector<string> &input){
+string ClientCommandHandler::createArticle(vector<string> &input){
   //måste först hämta idt på gruppen
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
+  cout<<"cr atricle"<<endl;
 
   msH.recvCode();
-  int nbrNgs=msH.recvInt();
+  int nbrNgs=msH.recvIntParameter();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -137,13 +140,14 @@ void ClientCommandHandler::createArticle(vector<string> &input){
   if(msH.recvCode()==Protocol::ANS_ACK){
     //it worked
   }
+  return "";
 }
-void ClientCommandHandler::deleteArticle(vector<string> &input){
+string ClientCommandHandler::deleteArticle(vector<string> &input){
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
-
+  cout<<"im here"<<endl;
   msH.recvCode();
-  int nbrNgs=msH.recvInt();
+  int nbrNgs=msH.recvIntParameter();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -152,6 +156,7 @@ void ClientCommandHandler::deleteArticle(vector<string> &input){
       id=tempId;
     }
   }
+  cout<<id<<endl;
   if(id!=-1){
     msH.sendCode(Protocol::COM_DELETE_ART);
     msH.sendIntParameter(id);
@@ -161,12 +166,12 @@ void ClientCommandHandler::deleteArticle(vector<string> &input){
     msH.recvCode();
   }
 }
-void ClientCommandHandler::getArticle(vector<string> &input){
+string ClientCommandHandler::getArticle(vector<string> &input){
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
 
   msH.recvCode();
-  int nbrNgs=msH.recvInt();
+  int nbrNgs=msH.recvIntParameter();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){

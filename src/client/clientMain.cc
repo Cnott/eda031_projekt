@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) {
 	while (true) {
 		try {
       string input;
-      string output;
-			cin >> input;
+      string output="";
+			getline(cin,input);
       output = ccH.update(ih.parseInput(input));
       cout << output << endl;
 		} catch (exception& e) {
