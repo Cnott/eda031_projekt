@@ -14,6 +14,8 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <iostream>
+
 #include "../common/protocol.h"
 
 /*-------------------------------------

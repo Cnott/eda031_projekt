@@ -1,5 +1,5 @@
 #include "clientcommandhandler.h"
-#include <iostream>
+
 using namespace std;
 
 
@@ -42,34 +42,34 @@ string ClientCommandHandler::listNewsgroups(){
   msH.sendCode(Protocol::COM_END);
 
   //hämtar resultatet
-  msH.recvCode();                 //hämtar ANS_LIST_NG
-  unsigned int nbrNgs=msH.recvIntParameter();       //hämtar group size
+  msH.recvCode();
+  int nbrNgs=msH.recvInt();
   string result;
-  for(unsigned int i=0;i!=nbrNgs;i++){
-    result.append(to_string(msH.recvIntParameter())+". ");
-    result.append(msH.recvStringParameter()+"\n");
+  for(int i=0;i!=nbrNgs;i++){
+    msH.recvIntParameter();
+    result+=msH.recvStringParameter();
   }
   return result;
 }
 
 string ClientCommandHandler::createNewsGroup(vector<string> &input){
-  cout<<input[0]<<endl;
   msH.sendCode(Protocol::COM_CREATE_NG);
   msH.sendStringParameter(input[0]);
   msH.sendCode(Protocol::COM_END);
 
+
+  cout << "got here.." << endl;
   msH.recvCode();
   if(msH.recvCode()==Protocol::ANS_ACK){
     //it worked
   }
-  return "";
 }
 string ClientCommandHandler::deleteNewsGroup(vector<string> &input){
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
 
   msH.recvCode();
-  int nbrNgs=msH.recvIntParameter();
+  int nbrNgs=msH.recvInt();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -94,7 +94,7 @@ string ClientCommandHandler::listArticles(vector<string> &input){
   msH.sendCode(Protocol::COM_END);
 
   msH.recvCode();
-  int nbrNgs=msH.recvIntParameter();
+  int nbrNgs=msH.recvInt();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -116,10 +116,9 @@ string ClientCommandHandler::createArticle(vector<string> &input){
   //måste först hämta idt på gruppen
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
-  cout<<"cr atricle"<<endl;
 
   msH.recvCode();
-  int nbrNgs=msH.recvIntParameter();
+  int nbrNgs=msH.recvInt();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -140,14 +139,13 @@ string ClientCommandHandler::createArticle(vector<string> &input){
   if(msH.recvCode()==Protocol::ANS_ACK){
     //it worked
   }
-  return "";
 }
 string ClientCommandHandler::deleteArticle(vector<string> &input){
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
-  cout<<"im here"<<endl;
+
   msH.recvCode();
-  int nbrNgs=msH.recvIntParameter();
+  int nbrNgs=msH.recvInt();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
@@ -156,7 +154,6 @@ string ClientCommandHandler::deleteArticle(vector<string> &input){
       id=tempId;
     }
   }
-  cout<<id<<endl;
   if(id!=-1){
     msH.sendCode(Protocol::COM_DELETE_ART);
     msH.sendIntParameter(id);
@@ -171,7 +168,7 @@ string ClientCommandHandler::getArticle(vector<string> &input){
   msH.sendCode(Protocol::COM_END);
 
   msH.recvCode();
-  int nbrNgs=msH.recvIntParameter();
+  int nbrNgs=msH.recvInt();
   int id=-1;
   int tempId;
   for(int i=0;i!=nbrNgs;i++){
