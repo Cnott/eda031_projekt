@@ -285,7 +285,7 @@ const Article& DiskDatabase::getArticle(unsigned int ngID, unsigned int artID) {
   string line = "";
   while (getline(ifs, line)) {
     text.append(line);
-    line = "\n";
+    text.append("\n");
   }
 
 tmpArticle = Article(artID, title, author, text);
