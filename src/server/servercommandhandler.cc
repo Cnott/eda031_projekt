@@ -94,13 +94,11 @@ void ServerCommandHandler::deleteNewsgroup() {
 */
 void ServerCommandHandler::listArticles() {
   unsigned int groupId = msH.recvIntParameter();      // num_p
-  msH.sendCode(Protocol::ANS_LIST_ART);
+  msH.sendCode(Protocol::ANS_LIST_ART);               // ANS_LIST_ART
   if (db->newsgroupInDB(groupId)) {
-                 // ANS_LIST_ART
     msH.sendCode(Protocol::ANS_ACK);                  // ANS_ACK
 
     vector<Article> articles = db->listArticles(groupId);
-    cout << "got into cmdH.listArticles. Size = " <<  articles.size() << endl;
     msH.sendIntParameter(articles.size());            // num_p
     for (auto a : articles) {
       cout << a.getTitle() << endl;
