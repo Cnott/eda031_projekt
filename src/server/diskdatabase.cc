@@ -236,7 +236,7 @@ const Article& DiskDatabase::getArticle(unsigned int ngID, unsigned int artID) {
   buffer << ifs.rdbuf();
   text = buffer.str();
 
-tmpArticle = Article(artID, title, author, text);
+  tmpArticle = Article(artID, title, author, text);
 
-return tmpArticle;
+  return tmpArticle;
 }
