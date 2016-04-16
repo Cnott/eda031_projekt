@@ -12,7 +12,6 @@ InputHandler::InputHandler() {
 
 pair<int, vector<string> > InputHandler::parseInput(string input) {
   vector<string> parameters = splitBySpace(input); //Splits input in order to identify commands
-
   if (parameters.size() == 0 || parameters.size() > 4) {
     //wrong number of inputs
     vector<string> rsv = {};
@@ -44,7 +43,8 @@ pair<int, vector<string> > InputHandler::returnParsed(vector<string> parameters)
       break;
 
     case Protocol::COM_DELETE_NG:   // delete newsgroup
-      rsv.push_back(parameters[1]); // the name of newsgroup
+      cout << parameters[1] << endl;
+      rsv.push_back(parameters[1]); // the name of newsgroup // changing to number...
       break;
 
     case Protocol::COM_LIST_ART:    // list articles
@@ -57,8 +57,8 @@ pair<int, vector<string> > InputHandler::returnParsed(vector<string> parameters)
       break;
 
     case Protocol::COM_DELETE_ART:  // delete article
-      rsv.push_back(parameters[1]); // the name of the newsgroup
-      rsv.push_back(parameters[2]); // the id of the article
+      rsv.push_back(parameters[2]); // the name of the newsgroup
+      rsv.push_back(parameters[3]); // the id of the article
       break;
 
     case Protocol::COM_GET_ART:     // get article

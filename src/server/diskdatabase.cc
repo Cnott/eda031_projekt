@@ -89,9 +89,8 @@ bool DiskDatabase::removeArticle(unsigned int ngId, unsigned int aId) {
 }
 
 bool DiskDatabase::newsgroupInDB(unsigned int ngId) {
-  string path = dbRoot;
-  path.append(to_string(ngId));
-  return opendir(path.c_str());
+  string ngName = getNewsgroupName(ngId);
+  return newsgroupInDB(ngName);
 }
 
 bool DiskDatabase::removeNewsgroup(unsigned int ngId) {
@@ -120,6 +119,7 @@ bool DiskDatabase::removeNewsgroup(unsigned int ngId) {
   }
 
   rmdir(ngRoot.c_str());
+  closedir(ngDir);
 
   return true;
 }
@@ -211,6 +211,8 @@ vector<Article> DiskDatabase::listArticles(unsigned int ngId) {
       artOrder.push_back(stoul(artId));
     }
   }
+
+  closedir(ngDir);
 
   artOrder.sort();
 
