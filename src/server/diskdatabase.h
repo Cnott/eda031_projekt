@@ -20,9 +20,11 @@
 #include <dirent.h>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 //#include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include "newsgroup.h"
 #include "database.h"
@@ -39,27 +41,38 @@
 class DiskDatabase : public Database {
 public:
   DiskDatabase();
-  ~DiskDatabase() {};
-  bool addNewsgroup(std::string ngName) {}
-  bool addArticle (unsigned int ngId, std::string title, std::string author, std::string text) {}
-  bool removeNewsgroup(unsigned int ngId) {}
-  bool removeArticle(unsigned int ngId, unsigned int aId) {}
-  std::string getNewsgroupName(unsigned int ngId) {}
-  std::vector<Newsgroup> listNewsGroups() {}
+  ~DiskDatabase() { closedir(dbRootDir);}
+  bool addNewsgroup(std::string ngName);
+  bool addArticle (unsigned int ngId, std::string title, std::string author, std::string text);
+  bool removeNewsgroup(unsigned int ngId);
+  bool removeArticle(unsigned int ngId, unsigned int aId);
+  std::string getNewsgroupName(unsigned int ngId);
+  std::vector<Newsgroup> listNewsgroups();
   std::vector<Article> listArticles(unsigned int ngId) {}
-  const Article& getArticle(unsigned int ngID, unsigned int artID) {}
+  const Article& getArticle(unsigned int ngID, unsigned int artID);
+  //Article getArticle(unsigned int ngID, unsigned int artID);
 
   bool articleInDB(unsigned int ngKey, unsigned int aKey) {}  // Possibly needs a bette solution.
+  void print();
 
 private:
-  bool newsgroupInDB(unsigned int) {}
+  //bool newsgroupInDB(unsigned int);
+  bool newsgroupInDB(std::string);
   std::map<unsigned int, Newsgroup> newsgroupDB;
   unsigned int latestNewsgroupID;
   unsigned int latestArticleID;
+  Article tmpArticle;
 
-  void infoDatabase();
+  void initDatabase();
   struct dirent *DirEntry;
-  char* dbRoot = "database/";
+  const char* dbRoot = "database/";
+  DIR* dbRootDir;
+  unsigned char isDir = 0x4;
+  unsigned char isFile = 0x8;
+
+  void saveNewsgroupInfo(std::string, std::string);
+  void saveDBInfo();
+  bool newsgroupInDB(unsigned int ngId);
 };
 
 #endif

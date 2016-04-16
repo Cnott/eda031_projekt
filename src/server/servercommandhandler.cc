@@ -15,10 +15,10 @@ void ServerCommandHandler::update() {
       listNewsgroups();
       break;
     case Protocol::COM_CREATE_NG:   // create newsgroup
-      createNewsGroup();
+      createNewsgroup();
       break;
     case Protocol::COM_DELETE_NG:   // delete newsgroup
-      deleteNewsGroup();
+      deleteNewsgroup();
       break;
     case Protocol::COM_LIST_ART:    // list articles
       listArticles();
@@ -43,7 +43,7 @@ void ServerCommandHandler::update() {
 */
 void ServerCommandHandler::listNewsgroups() {
   msH.sendCode(Protocol::ANS_LIST_NG);                // ANS_LIST_NG
-  vector<Newsgroup> groups = db->listNewsGroups();
+  vector<Newsgroup> groups = db->listNewsgroups();
 
   msH.sendIntParameter(groups.size());                // num_p
   for (auto ng : groups) {
@@ -58,7 +58,7 @@ void ServerCommandHandler::listNewsgroups() {
     ANS_CREATE_NG [ANS_ACK | ANS_NAK ERR_NG_ALREADY_EXISTS] ANS_END
 */
 // Error: still able to create two newsgroups with the same name
-void ServerCommandHandler::createNewsGroup(){
+void ServerCommandHandler::createNewsgroup(){
     string groupName = msH.recvStringParameter();     // string_p
 
     msH.sendCode(Protocol::ANS_CREATE_NG);            // ANS_CREATE_NG
@@ -74,7 +74,7 @@ void ServerCommandHandler::createNewsGroup(){
     COM_DELETE_NG num_p COM_END
     ANS_DELETE_NG [ANS_ACK | ANS_NAK ERR_NG_DOES_NOT_EXIST] ANS_END
 */
-void ServerCommandHandler::deleteNewsGroup() {
+void ServerCommandHandler::deleteNewsgroup() {
     int groupId = msH.recvIntParameter();             // num_p
 
     msH.sendCode(Protocol::ANS_DELETE_NG);             // ANS_DELETE_NG

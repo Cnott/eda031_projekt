@@ -35,7 +35,7 @@ public:
   virtual bool removeNewsgroup(unsigned int ngId) = 0;
   virtual bool removeArticle(unsigned int ngId, unsigned int aId) = 0;
   virtual std::string getNewsgroupName(unsigned int ngId) = 0;
-  virtual std::vector<Newsgroup> listNewsGroups() = 0;
+  virtual std::vector<Newsgroup> listNewsgroups() = 0;
   virtual std::vector<Article> listArticles(unsigned int ngId) = 0;
   virtual const Article& getArticle(unsigned int ngID, unsigned int artID) = 0;
 

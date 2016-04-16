@@ -38,8 +38,8 @@ public:
 
 private:
   void listNewsgroups();
-  void createNewsGroup();
-  void deleteNewsGroup();
+  void createNewsgroup();
+  void deleteNewsgroup();
   void listArticles();
   void createArticle();
   void deleteArticle();
