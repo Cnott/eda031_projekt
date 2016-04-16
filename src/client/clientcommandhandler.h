@@ -34,7 +34,7 @@
 class ClientCommandHandler {
 public:
   ClientCommandHandler(MessageHandler& mh): msH(mh) {}
-  std::string update(std::pair<int,std::vector<std::string>>&);
+  std::string update(std::pair<int,std::vector<std::string> >);
 
 private:
   std::string listNewsgroups();
