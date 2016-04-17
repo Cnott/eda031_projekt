@@ -37,7 +37,8 @@ int main(int argc, char* argv[]) {
       string output;
 			getline(cin, input);
       output = ccH.update(ih.parseInput(input));
-      cout << output << endl;
+      cout << string(60, '-') << "\n" << output;
+      cout << string(60, '-') << "\n" << endl;
 		} catch (exception& e) {
 			cout << " Error: some error." << endl;
 			exit(1);

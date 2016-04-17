@@ -240,8 +240,8 @@ string ClientCommandHandler::getArticle(vector<string> &input){
   msH.sendCode(Protocol::COM_END);
 
   if (msH.recvCode() == Protocol::ANS_GET_ART) {
+    //debug output
     cout<<"Reading Article nr."<<artId<<" from Newsgroup nr."<<ngId<<"."<<endl;
-    cout << string(60, '-') << endl;
   }
 
   string result = "";
