@@ -82,7 +82,9 @@ void ServerCommandHandler::deleteNewsgroup() {
     msH.sendCode(Protocol::ANS_DELETE_NG);             // ANS_DELETE_NG
     if (db->removeNewsgroup(groupId)) {
       msH.sendCode(Protocol::ANS_ACK);                // ANS_ACK
+      cout << "ANS ACK" << endl;
     } else {
+      cout << "ANS_NAK" << endl;
       msH.sendCode(Protocol::ANS_NAK);                // ANS_NAK
       msH.sendCode(Protocol::ERR_NG_DOES_NOT_EXIST);  // ERR_NG_DOES_NOT_EXIST
     }

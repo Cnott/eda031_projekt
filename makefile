@@ -48,7 +48,8 @@ clean:
 	rm -f $(CLIENT)*.o
 	rm -f $(CLIENT)*.d
 	rm -f $(OUTPUT)*
-	rm -f -r database/*
+	#rm -f -r database
+	#rm -f -r database/.dbinfo
 # Generate dependencies in *.d files
 %.d: %.cc
 	@set -e; rm -f $@; \

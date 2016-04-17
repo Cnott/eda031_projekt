@@ -30,14 +30,15 @@ int main(int argc, char* argv[]) {
   ClientCommandHandler ccH(msH);
   InputHandler ih;
 
-  cout << "Enter a command: ";
 	while (true) {
+    cout << "Enter a command: ";
 		try {
       string input;
       string output;
-			cin >> input;
+			getline(cin, input);
       output = ccH.update(ih.parseInput(input));
-      cout << output << endl;
+      cout << string(80, '-') << "\n" << output;
+      cout << string(80, '-') << "\n" << endl;
 		} catch (exception& e) {
 			cout << " Error: some error." << endl;
 			exit(1);

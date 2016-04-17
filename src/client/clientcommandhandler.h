@@ -14,6 +14,8 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <iostream>
+
 #include "../common/protocol.h"
 
 /*-------------------------------------
@@ -38,12 +40,12 @@ public:
 
 private:
   std::string listNewsgroups();
-  void createNewsGroup(std::vector<std::string> &);
-  void deleteNewsGroup(std::vector<std::string> &);
-  void listArticles(std::vector<std::string> &);
-  void createArticle(std::vector<std::string> &);
-  void deleteArticle(std::vector<std::string> &);
-  void getArticle(std::vector<std::string> &);
+  std::string createNewsGroup(std::vector<std::string> &);
+  std::string deleteNewsGroup(std::vector<std::string> &);
+  std::string listArticles(std::vector<std::string> &);
+  std::string createArticle(std::vector<std::string> &);
+  std::string deleteArticle(std::vector<std::string> &);
+  std::string getArticle(std::vector<std::string> &);
 
   MessageHandler msH;
 };
