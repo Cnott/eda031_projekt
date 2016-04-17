@@ -45,6 +45,7 @@ int main(int argc, char* argv[]) {
 
   vector<string> helpInfo = {listN,listA,getA,createN,createA,deleteN,deleteA};
 
+  cout << string(80, '-')  << endl << info << endl << string(80, '-') << endl;
 	while (true) {
     cout << "Enter a command: ";
 		try {
@@ -55,6 +56,7 @@ int main(int argc, char* argv[]) {
         for(auto it : helpInfo) {
           cout << it << endl;
         }
+        cout << string(80, '-') << endl;
       } else {
         output = ccH.update(ih.parseInput(input));
         cout << string(80, '-') << "\n" << output << "\n";
