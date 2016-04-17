@@ -56,11 +56,12 @@ pair<int, vector<string> > InputHandler::returnParsed(vector<string> parameters)
 
     case Protocol::COM_DELETE_ART:  // delete article
       rsv.push_back(parameters[2]); // the name of the newsgroup
-      rsv.push_back(parameters[3  ]); // the id of the article
+      rsv.push_back(parameters[3]); // the id of the article
       break;
 
     case Protocol::COM_GET_ART:     // get article
       rsv.push_back(parameters[1]);
+      rsv.push_back(parameters[2]);
       break;
 
     default:                        //list newsgroup and default return.

@@ -158,6 +158,7 @@ string ClientCommandHandler::createArticle(vector<string> &input){
   }
 
   msH.recvCode(); // ANS_END
+  return "";
 }
   // msH.recvCode();
   // int nbrNgs=msH.recvIntParameter();
@@ -228,31 +229,32 @@ string ClientCommandHandler::deleteArticle(vector<string> &input){
   //
   //   msH.recvCode();
   // }
+  return "";
 }
 string ClientCommandHandler::getArticle(vector<string> &input){
-  msH.sendCode(Protocol::COM_LIST_NG);
+  msH.sendCode(Protocol::COM_GET_ART);
+  auto ngId = stoul(input[0]);
+  auto artId = stoul(input[1]);
+  msH.sendIntParameter(ngId);
+  msH.sendIntParameter(artId);
   msH.sendCode(Protocol::COM_END);
 
-  msH.recvCode();
-  int nbrNgs=msH.recvIntParameter();
-  int id=-1;
-  int tempId;
-  for(int i=0;i!=nbrNgs;i++){
-    tempId=msH.recvIntParameter();
-    if(msH.recvStringParameter()==input[0]){
-      id=tempId;
-    }
+  if (msH.recvCode() == Protocol::ANS_GET_ART) {
+    cout << "Server: Trying to get article " << artId << " in newsgroup " << ngId << endl;
   }
-  if(id!=-1){
-    msH.sendCode(Protocol::COM_GET_ART);
-    msH.sendIntParameter(id);
-    msH.sendIntParameter(stoi(input[1]));
-    msH.sendCode(Protocol::COM_END);
 
-    msH.recvCode();
-    string result;
-    if(msH.recvCode()==Protocol::ANS_ACK){
-        result+=msH.recvStringParameter();
-    }
+  string result = "";
+  auto response = msH.recvCode();
+  if (response == Protocol::ANS_ACK) {
+    result.append("Title: ");
+    result += msH.recvStringParameter() + "\n";
+    result.append("Author: ");
+    result += msH.recvStringParameter() + "\n";
+    result.append("Text: ");
+    result += msH.recvStringParameter() + "\n";
+  } else { //response was ANS_NAK
+    // Behöver kanske hantera detta
+    msH.recvCode(); // ERR_NG_DOES_NOT_EXIST
   }
+  return result;
 }
