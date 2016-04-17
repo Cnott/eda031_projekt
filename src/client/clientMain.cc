@@ -30,15 +30,36 @@ int main(int argc, char* argv[]) {
   ClientCommandHandler ccH(msH);
   InputHandler ih;
 
+  string info="This is a newsgroup client. Type 'help' for a list of commands.";
+  string listN = "list:\t Lists newsgroups on server.";
+  string listA = "list x:\t Lists articles on newsgroup number x.";
+  string getA = "get x y:\t Retrieves article y from newsgroup x.";
+  string createN = "create newsgroup x:\t Creates new newsgroup with name x.";
+  string createA = "create article x path:\t Creates new article in "
+                         "newsgroup x from the content\n\t\t\t of the file "
+                         "specified. The file should have title\n\t\t\t on the "
+                         "first row followed by the author on the\n\t\t\t "
+                         "second and the text content on the remaining.";
+  string deleteN = "delete newsgroup x:\t Deletes newsgroup x.";
+  string deleteA = "delete article x y:\t Deletes article y from newsgroup x.";
+
+  vector<string> helpInfo = {listN,listA,getA,createN,createA,deleteN,deleteA};
+
 	while (true) {
     cout << "Enter a command: ";
 		try {
       string input;
       string output;
 			getline(cin, input);
-      output = ccH.update(ih.parseInput(input));
-      cout << string(80, '-') << "\n" << output;
-      cout << string(80, '-') << "\n" << endl;
+      if (input == "help") {
+        for(auto it : helpInfo) {
+          cout << it << endl;
+        }
+      } else {
+        output = ccH.update(ih.parseInput(input));
+        cout << string(80, '-') << "\n" << output << "\n";
+        cout << string(80, '-') << "\n" << endl;
+      }
 		} catch (exception& e) {
 			cout << " Error: some error." << endl;
 			exit(1);
