@@ -240,17 +240,17 @@ string ClientCommandHandler::getArticle(vector<string> &input){
   msH.sendCode(Protocol::COM_END);
 
   if (msH.recvCode() == Protocol::ANS_GET_ART) {
-    cout << "Server: Trying to get article " << artId << " in newsgroup " << ngId << endl;
+    cout<<"Reading Article nr."<<artId<<" from Newsgroup nr."<<ngId<<"."<<endl;
+    cout << string(60, '-') << endl;
   }
 
   string result = "";
   auto response = msH.recvCode();
   if (response == Protocol::ANS_ACK) {
-    result.append("Title: ");
-    result += msH.recvStringParameter() + "\n";
+    result.append("Title : ");
+    result += msH.recvStringParameter() + "\n" + string(60, '-') + "\n";
     result.append("Author: ");
-    result += msH.recvStringParameter() + "\n";
-    result.append("Text: ");
+    result += msH.recvStringParameter() + "\n" + string(60, '-') + "\n";
     result += msH.recvStringParameter() + "\n";
   } else { //response was ANS_NAK
     // Behöver kanske hantera detta
