@@ -14,11 +14,30 @@ DiskDatabase::DiskDatabase() : tmpArticle(0, "", "", ""){
   saveDBInfo();
 }
 
-void DiskDatabase::saveDBInfo() {
-  string   path = dbRoot;
-  ofstream ofs(path + ".dbinfo", ofstream::out);
+unsigned int DiskDatabase::latestArticleId( unsigned int ngId ) {
+  ifstream ifs(path(ngId) + "/.dbinfo", ifstream::in);
 
-  ofs << to_string(latestNewsgroupID) << endl << to_string(latestArticleID);
+  unsigned int aId;
+  string tmp;
+  ifs >> tmp >> tmp;
+  aId = stoul(tmp);
+  ifs.close();
+
+  return aId;
+}
+
+string DiskDatabase::path(unsigned int ngId) {
+  return dbRoot + to_string(ngId);
+}
+
+string DiskDatabase::path(unsigned int ngId, unsigned int aId) {
+  return path(ngId) + "/" + to_string(aId);
+}
+
+void DiskDatabase::saveDBInfo() {
+  ofstream ofs(dbRoot + ".dbinfo", ofstream::out);
+
+  ofs << to_string(latestNewsgroupID) << endl;// << to_string(latestArticleId());
   ofs.close();
 }
 
@@ -28,7 +47,7 @@ bool DiskDatabase::addNewsgroup(string name) {
   string path = dbRoot;
   path.append("/" + to_string(++latestNewsgroupID));
   mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-  saveNewsgroupInfo(path.append("/"), name);
+  saveNGInfo(name, latestNewsgroupID, 0);
 
   saveDBInfo();
   return true;
@@ -39,14 +58,16 @@ bool DiskDatabase::addArticle(unsigned int ngId,
                               std::string  author,
                               std::string  text) {
   DIR   *ngDir;
-  string path = dbRoot + to_string(ngId);
 
-  if (!(ngDir = opendir(path.c_str()))) return false;
+  if (!(ngDir = opendir(path(ngId).c_str()))) return false;
 
-  ofstream ofs(path + "/" + to_string(++latestArticleID), ofstream::out);
+  unsigned int aId = latestArticleId(ngId);
+  aId++;
+  ofstream ofs(path(ngId, aId), ofstream::out);
   ofs << title << endl << author  << endl << text;
   ofs.close();
 
+  saveNGInfo(getNewsgroupName(ngId), ngId, aId);
   saveDBInfo();
   return true;
 }
@@ -56,6 +77,7 @@ vector<Newsgroup> DiskDatabase::listNewsgroups() {
 
   vector<Newsgroup> ngDB;
   list<unsigned int> ngOrder;
+
 
   rewinddir(dbRootDir);
   while (ng_dirent = readdir(dbRootDir)) {
@@ -124,10 +146,11 @@ bool DiskDatabase::removeNewsgroup(unsigned int ngId) {
   return true;
 }
 
-void DiskDatabase::saveNewsgroupInfo(string path, string name) {
-  ofstream ofs(path + ".dbinfo", ofstream::out);
+void DiskDatabase::saveNGInfo(std::string name, unsigned int ngId,
+                                                unsigned int aId  ) {
+  ofstream ofs(path(ngId) + "/.dbinfo", ofstream::out);
 
-  ofs << name;
+  ofs << name << endl << aId;
   ofs.close();
 }
 
@@ -156,18 +179,18 @@ bool DiskDatabase::newsgroupInDB(string name) {
 
 void DiskDatabase::initDatabase() {
   // Check if db exists - otherwise create the required directory
-  dirent *ng_dirent;
 
-  if (!(dbRootDir = opendir(dbRoot))) {
+  if (!(dbRootDir = opendir(dbRoot.c_str()))) {
     cout << "No database exists at " << dbRoot << ".\n Creating a new one.\n";
-    mkdir(dbRoot, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    mkdir(dbRoot.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     latestNewsgroupID = 0;
+    dbRootDir = opendir(dbRoot.c_str());
     return;
   }
 
   string   path = dbRoot;
   ifstream ifs(path + ".dbinfo", ifstream::in);
-  ifs >> latestNewsgroupID >> latestArticleID;
+  ifs >> latestNewsgroupID;// >> latestArticleId();
   ifs.close();
 }
 
@@ -225,20 +248,18 @@ vector<Article> DiskDatabase::listArticles(unsigned int ngId) {
   return articles;
 }
 
-const Article& DiskDatabase::getArticle(unsigned int ngID, unsigned int artID) {
+const Article& DiskDatabase::getArticle(unsigned int ngId, unsigned int aId) {
   string title, author;
   string text = "";
-  string path = dbRoot;
-  path.append(to_string(ngID) + "/" + to_string(artID));
 
-  ifstream ifs(path, ifstream::in);
+  ifstream ifs(path(ngId, aId), ifstream::in);
   getline(ifs, title);
   getline(ifs, author);
   stringstream buffer;
   buffer << ifs.rdbuf();
   text = buffer.str();
 
-  tmpArticle = Article(artID, title, author, text);
+  tmpArticle = Article(aId, title, author, text);
 
   return tmpArticle;
 }

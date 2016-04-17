@@ -54,17 +54,24 @@ public:
   std::vector<Article>    listArticles      ( unsigned int ngId     );
 
 private:
-  void print              ();
-  void initDatabase       ();
-  void saveDBInfo         ();
-  void saveNewsgroupInfo  ( std::string, std::string  );
+  void print                    ();
+  void initDatabase             ();
+  void saveDBInfo               ();
+  void saveNGInfo               ( std::string name,
+                                  unsigned int ngId,
+                                  unsigned int aId                   );
+
+  unsigned int latestArticleId  ( unsigned int ngId                 );
+  std::string path              ( unsigned int ngId                 );
+  std::string path              ( unsigned int ngId,
+                                  unsigned int aId                  );
 
   std::map<unsigned int, Newsgroup>   newsgroupDB;
   unsigned int                        latestNewsgroupID;
   unsigned int                        latestArticleID;
   Article                             tmpArticle;
 
-  const char* dbRoot        = "database/";
+  std::string dbRoot        = "database/";
   unsigned char isDir       = 0x4;
   DIR* dbRootDir;
 };
