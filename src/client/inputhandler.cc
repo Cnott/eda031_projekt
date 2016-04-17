@@ -2,14 +2,12 @@
 
 using namespace std;
 
+InputHandler::InputHandler() {
+}
+
 /* Parses the input from client and retuns a pair with the protocol as the
    first value and a vector of strings containing information to give the server
 */
-
-InputHandler::InputHandler() {
-
-}
-
 pair<int, vector<string> > InputHandler::parseInput(string input) {
   vector<string> parameters = splitBySpace(input); //Splits input in order to identify commands
   if (parameters.size() == 0 || parameters.size() > 4) {
@@ -58,7 +56,7 @@ pair<int, vector<string> > InputHandler::returnParsed(vector<string> parameters)
 
     case Protocol::COM_DELETE_ART:  // delete article
       rsv.push_back(parameters[2]); // the name of the newsgroup
-      rsv.push_back(parameters[3]); // the id of the article
+      rsv.push_back(parameters[3  ]); // the id of the article
       break;
 
     case Protocol::COM_GET_ART:     // get article
@@ -102,26 +100,22 @@ int InputHandler::parseCommand(vector<string> parameters) {
    the text of the article.
 */
 vector<string> InputHandler::readFromFile(string filePath) {
-  string line;
-  ifstream myFile (filePath);
-  vector<string> rsv;           //return string vector
+  /* Reads file content from file into string */
+  ifstream file(filePath.c_str());
+  stringstream buffer;
+  buffer << file.rdbuf();
+  string fileCon = buffer.str();
 
-  //ifstream file(input.c_str());
-  //stringstream buffer;
-  //buffer << file.rdbuf();
-  //string str = buffer.str();
+  /* Find first row and save as new string then remove from fileCon */
+  string title(fileCon.begin(),find(fileCon.begin(),fileCon.end(),'\n'));
+  fileCon.erase(fileCon.begin(),find(fileCon.begin(),fileCon.end(),'\n')+1);
+  string author(fileCon.begin(), find(fileCon.begin(), fileCon.end(),'\n'));
+  fileCon.erase(fileCon.begin(),find(fileCon.begin(),fileCon.end(),'\n')+1);
 
-  if (myFile.is_open()) {
-    for (int i = 1; i != 3; i++) { //adds first two lines i.e. title & author
-      getline(myFile, line);
-      rsv.push_back(line);
-    }
-    string buff = "";
-    while (getline(myFile,line)) {
-      buff += line;
-    }
-    rsv.push_back(buff);          // adds remaining lines i.e. text
-    myFile.close();
-  }
+  /* Save rest of string as text. */
+  string text = fileCon;
+
+  /* Adds strings to vector and returns */
+  vector<string> rsv = {title, author, text};
   return rsv;
 }
