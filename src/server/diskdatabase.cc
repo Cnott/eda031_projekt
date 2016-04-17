@@ -103,11 +103,7 @@ bool DiskDatabase::removeArticle(unsigned int ngId, unsigned int aId) {
     // does the ng exist?
     if (!newsgroupInDB(ngId)) return false;
 
-    // try to remove article from ng
-    string path = dbRoot;
-    path.append(to_string(ngId) + "/" + to_string(aId));
-
-    return remove(path.c_str()) == 0;
+    return remove(path(ngId, aId).c_str()) == 0;
 }
 
 bool DiskDatabase::newsgroupInDB(unsigned int ngId) {
@@ -206,10 +202,9 @@ void DiskDatabase::print() {
 }
 
 string DiskDatabase::getNewsgroupName(unsigned int ngId) {
-  string path = dbRoot;
-
-  path.append("/" + to_string(ngId) + "/.dbinfo");
-  ifstream ifs(path, ifstream::in);
+  string ngPath = path(ngId);
+  ngPath.append("/.dbinfo");
+  ifstream ifs(ngPath, ifstream::in);
 
   string ngName;
   getline(ifs, ngName);
@@ -219,12 +214,9 @@ string DiskDatabase::getNewsgroupName(unsigned int ngId) {
 }
 
 vector<Article> DiskDatabase::listArticles(unsigned int ngId) {
-  string path = dbRoot;
-  path.append(to_string(ngId) + "/");
-
   DIR* ngDir;
   dirent* art_dirent;
-  ngDir = opendir(path.c_str());
+  ngDir = opendir(path(ngId).c_str());
 
 
   list<unsigned int> artOrder;
