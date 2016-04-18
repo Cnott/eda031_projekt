@@ -17,14 +17,17 @@
 /*-------------------------------------
     I N C L U D E S
 -------------------------------------*/
-#include "../common/protocol.h"
 #include <algorithm>
 #include <vector>
 #include <sstream>
 #include <cctype>
 #include <iostream>
 #include <fstream>
+#include <string>
 
+#include "../common/protocol.h"
+#include "../common/exceptions/inputexception.h"
+#include "../common/exceptions/invalidpathexception.h"
 /*-------------------------------------
     D E C L A R A T I O N S
 -------------------------------------*/
@@ -39,10 +42,12 @@ public:
   std::pair<int, std::vector<std::string> > parseInput(std::string);
 private:
   std::vector<std::string> splitBySpace(std::string);
-  int parseCommand(std::vector<std::string>);
+  int parseCommand(std::vector<std::string>) throw (InputException);
   std::string combineContent(std::vector<std::string>);
-  std::pair<int, std::vector<std::string> > returnParsed(std::vector<std::string>);
-  std::vector<std::string> readFromFile(std::string filePath);
+  std::pair<int, std::vector<std::string> > returnParsed(std::vector<std::string>) throw (InputException, InvalidPathException);
+  std::vector<std::string> readFromFile(std::string filePath) throw (InvalidPathException);
+
+  bool isNumber(const std::string& s);
 };
 
 #endif

@@ -19,7 +19,7 @@
 #include "../common/constants.h"
 #include "../server/newsgroup.h"
 #include "../common/messagehandler.h"
-#include "memdatabase.h"
+#include "newsserver_memory/memdatabase.h"
 
 using namespace std;
 

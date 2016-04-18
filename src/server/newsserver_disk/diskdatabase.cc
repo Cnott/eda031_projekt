@@ -19,7 +19,8 @@ unsigned int DiskDatabase::latestArticleId( unsigned int ngId ) {
 
   unsigned int aId;
   string tmp;
-  ifs >> tmp >> tmp;
+  getline(ifs, tmp);
+  ifs >> tmp;
   aId = stoul(tmp);
   ifs.close();
 
@@ -254,4 +255,22 @@ const Article& DiskDatabase::getArticle(unsigned int ngId, unsigned int aId) {
   tmpArticle = Article(aId, title, author, text);
 
   return tmpArticle;
+}
+
+bool DiskDatabase::articleInDB(unsigned int ngId, unsigned int aId) {
+  DIR* ngDir;
+  dirent* a_dirent;
+  ngDir = opendir(path(ngId).c_str());
+
+  while (a_dirent = readdir(ngDir)) {
+    string aIdStr = a_dirent->d_name;
+    if (aIdStr != "." && aIdStr != ".."
+                      && aIdStr != ".dbinfo"
+                      && stoul(aIdStr) == aId) {
+        closedir(ngDir);
+        return true;
+    }
+  }
+  closedir(ngDir);
+  return false;
 }

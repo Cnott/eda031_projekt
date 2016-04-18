@@ -1,5 +1,5 @@
-#include "newsserver.h"
-#include "database.h"
+#include "../newsserver.h"
+//#include "../database.h"
 #include "diskdatabase.h"
 
 int main(int argc, char* argv[]) {

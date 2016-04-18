@@ -26,8 +26,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "newsgroup.h"
-#include "database.h"
+#include "../newsgroup.h"
+#include "../database.h"
 
 /*-------------------------------------
     C L A S S   D E F
@@ -41,7 +41,7 @@ public:
   bool addArticle       ( unsigned int ngId,  std::string title,
                           std::string author, std::string text      );
   bool addNewsgroup     ( std::string ngName                        );
-  bool articleInDB      ( unsigned int ngKey, unsigned int aKey     ) {}
+  bool articleInDB      ( unsigned int ngKey, unsigned int aKey     );
   bool newsgroupInDB    ( unsigned int ngId                         );
   bool newsgroupInDB    ( std::string                               );
   bool removeNewsgroup  ( unsigned int ngId                         );

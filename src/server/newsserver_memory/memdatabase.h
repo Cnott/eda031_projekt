@@ -17,9 +17,9 @@
 -------------------------------------*/
 #include <string>
 #include <vector>
-#include "newsgroup.h"
 
-#include "database.h"
+#include "../newsgroup.h"
+#include "../database.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S

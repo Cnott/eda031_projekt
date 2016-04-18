@@ -34,16 +34,13 @@ string ClientCommandHandler::update(pair<int,vector<string> > input){
       break;
   }
 }
-/**
-*
-*COM_LIST_NG COM_END
-*
-**/
+
 string ClientCommandHandler::listNewsgroups(){
+  // messages to server
   msH.sendCode(Protocol::COM_LIST_NG);
   msH.sendCode(Protocol::COM_END);
 
-  //hämtar resultatet
+  // messages from server
   if (msH.recvCode() == Protocol::ANS_LIST_NG) {
     if (DEBUG)
       cout << "Server: Trying to list all newsgroups" << endl;
@@ -52,98 +49,101 @@ string ClientCommandHandler::listNewsgroups(){
   string result;
   for(int i = 0; i != nbrNgs; i++){
     result.append(to_string(msH.recvIntParameter()) + ". ");
-    result += msH.recvStringParameter() + "\n";
+    result.append(msH.recvStringParameter());
+    if (i != nbrNgs - 1)
+      result.append("\n");
   }
   msH.recvCode(); // ANS_END
   return result;
 }
 
-string ClientCommandHandler::createNewsGroup(vector<string> &input){
+string ClientCommandHandler::createNewsGroup(vector<string> &input) throw (NGExistsException){
+  // messages to server
   msH.sendCode(Protocol::COM_CREATE_NG);
   msH.sendStringParameter(input[0]);
   msH.sendCode(Protocol::COM_END);
 
+// messages from server
   if (msH.recvCode() == Protocol::ANS_CREATE_NG) {
     if (DEBUG)
       cout << "Server: Trying to create newsgroup " << input[0] << endl;
-  };
-  if(msH.recvCode()==Protocol::ANS_ACK){
+  }
+
+  auto response = msH.recvCode();
+  if(response == Protocol::ANS_ACK){
     if (DEBUG)
       cout << "Succeeded" << endl;
+  } else if (response == Protocol::ANS_NAK) {
+      if (msH.recvCode() == Protocol::ERR_NG_ALREADY_EXISTS){
+        msH.recvCode(); // ANS_END
+        throw NGExistsException(input[0]);
+      }
   }
   msH.recvCode(); // ANS_END
-  return input[0] + " added to the database\n";
+  return input[0] + " added to the database";
 }
-string ClientCommandHandler::deleteNewsGroup(vector<string> &input){
+string ClientCommandHandler::deleteNewsGroup(vector<string> &input) throw (NGDoesNotExistException){
+  // messages to server
   unsigned int ngId = stoul(input[0]);
   msH.sendCode(Protocol::COM_DELETE_NG);
   msH.sendIntParameter(ngId);
   msH.sendCode(Protocol::COM_END);
 
-  unsigned int tmp = msH.recvCode();
-  if (tmp == Protocol::ANS_DELETE_NG) {
+  // messages from server
+  auto response = msH.recvCode();
+  if (response == Protocol::ANS_DELETE_NG) {
     if (DEBUG)
       cout << "Server: Trying to delete newsgroup" << endl;
   } else {
     if (DEBUG)
-      cout << "Expected ANS_DELETE_NG, got " << tmp << endl;
+      cout << "Expected ANS_DELETE_NG, got " << response << endl;
   }
 
+  // successful?
   if (msH.recvCode() == Protocol::ANS_ACK) {
     msH.recvCode(); // ANS_END
-    return "Newsgroup " + to_string(ngId) + " deleted\n";
+    return "Newsgroup " + to_string(ngId) + " deleted";
   } else if (msH.recvCode() == Protocol::ERR_NG_DOES_NOT_EXIST){
-    msH.recvCode(); // ANS_END
-    return "That newsgroup does not exist\n";
+      msH.recvCode(); // ANS_END
+      throw NGDoesNotExistException(input[0]);
+  } else {
+    throw exception();  // If we get here, something went really wrong!
   }
-  // int nbrNgs=msH.recvIntParameter();
-  // int id=-1;
-  // int tempId;
-  // for(int i=0;i!=nbrNgs;i++){
-  //   tempId=msH.recvIntParameter();
-  //   if(msH.recvStringParameter()==input[0]){
-  //     id=tempId;
-  //   }
-  // }
-  // if(id!=-1){
-  //   msH.sendCode(Protocol::COM_DELETE_NG);
-  //   msH.sendIntParameter(id);
-  //   msH.sendCode(Protocol::COM_END);
-  // }
-  //
-  // msH.recvCode();
-  // if(msH.recvCode()==Protocol::ANS_ACK){
-  //   return input[0] + " removed from the database";
-  // }
 }
-string ClientCommandHandler::listArticles(vector<string> &input){
+
+
+string ClientCommandHandler::listArticles(vector<string> &input) throw (NGDoesNotExistException){
+  // messages to server
   msH.sendCode(Protocol::COM_LIST_ART);
   msH.sendIntParameter(stoul(input[0]));
   msH.sendCode(Protocol::COM_END);
 
+  // messages from server
   if (msH.recvCode() == Protocol::ANS_LIST_ART) {
     if (DEBUG)
       cout << "Server: Trying to list all articles in newsgroup " << input[0] << endl;
   }
 
+  // successful?
   string result = "";
   auto response = msH.recvCode();
   if (response == Protocol::ANS_ACK) {
-    int nbrNgs = msH.recvIntParameter();
-    for (int i = 0; i != nbrNgs; i++) {
+    int nbrArt = msH.recvIntParameter();
+    for (int i = 0; i != nbrArt; i++) {
       result.append(to_string(msH.recvIntParameter()) + ". ");
-      result += msH.recvStringParameter() + "\n";
+      result += msH.recvStringParameter();
+      if (i != nbrArt - 1) result += "\n";
     }
-  } else { //response was ANS_NAK
-    // Behöver kanske hantera detta
-    msH.recvCode(); // ERR_NG_DOES_NOT_EXIST
+  } else if (msH.recvCode() == Protocol::ERR_NG_DOES_NOT_EXIST){
+    msH.recvCode(); //ANS_END
+    throw NGDoesNotExistException(input[0]);
   }
   msH.recvCode(); //ANS_END
   return result;
 }
 
-string ClientCommandHandler::createArticle(vector<string> &input){
-  //måste först hämta idt på gruppen
+string ClientCommandHandler::createArticle(vector<string> &input) throw (NGDoesNotExistException){
+  // messages to server
   msH.sendCode(Protocol::COM_CREATE_ART);
   msH.sendIntParameter(stoul(input[0]));
   for (int i = 1; i <= 3; i++) {
@@ -151,22 +151,26 @@ string ClientCommandHandler::createArticle(vector<string> &input){
   }
   msH.sendCode(Protocol::COM_END);
 
+  // messages from server
   if (msH.recvCode() == Protocol::ANS_CREATE_ART) {
     if (DEBUG)
       cout << "Server: Trying to create article in newsgroup " << input[0] << endl;
   }
+
+  // successful?
+  string result = "";
   auto response = msH.recvCode();
   if (response == Protocol::ANS_ACK) {
-    cout << input[1] << " by " << input[2] << " added to newsgroup " << input[0] << endl;
-  } else { // ANS_NAK
-    // Behöver säkert hanteras
-    msH.recvCode(); //ERR_NG_DOES_NOT_EXIST
-    if (DEBUG)
-      cout << "Newsgroup " << input[0] << " does not exist" << endl;
+    result.append(input[1] + " by " + input[2] + " added to newsgroup " + input[0]);
+  }  else if (msH.recvCode() == Protocol::ERR_NG_DOES_NOT_EXIST){
+    msH.recvCode(); //ANS_END
+    throw NGDoesNotExistException(input[0]);
+  } else {
+    throw exception();  // If we get here, something went really wrong!
   }
 
   msH.recvCode(); // ANS_END
-  return "";
+  return result;
 }
   // msH.recvCode();
   // int nbrNgs=msH.recvIntParameter();
@@ -191,7 +195,8 @@ string ClientCommandHandler::createArticle(vector<string> &input){
   //   //it worked
   // }
 
-string ClientCommandHandler::deleteArticle(vector<string> &input){
+string ClientCommandHandler::deleteArticle(vector<string> &input) throw (NGDoesNotExistException, ArticleDoesNotExistException){
+  // messages to server
   msH.sendCode(Protocol::COM_DELETE_ART);
   auto ngId = stoul(input[0]);
   auto artId = stoul(input[1]);
@@ -199,29 +204,29 @@ string ClientCommandHandler::deleteArticle(vector<string> &input){
   msH.sendIntParameter(artId);
   msH.sendCode(Protocol::COM_END);
 
+  // messages from server
   if (msH.recvCode() == Protocol::ANS_DELETE_ART) {
     if (DEBUG)
       cout << "Server: Trying to delete article " << artId << " in newsgroup " << ngId << endl;
   }
 
+  // successful?
   auto response = msH.recvCode();
   if (response == Protocol::ANS_ACK) {
     if (DEBUG)
       cout << "Article has been deleted" << endl;
   } else {
     response = msH.recvCode();
+    msH.recvCode(); // ANS_END
     if (response == Protocol::ERR_NG_DOES_NOT_EXIST) {
-      if (DEBUG)
-        cout << "Newsgroup " << ngId << " does not exist" << endl;
-    } else { // ERR_ART_DOES_NOT_EXIST
-      if (DEBUG)
-        cout << "Article " << artId << " in newsgroup " << ngId << " does not exist" << endl;
+      throw NGDoesNotExistException(input[0]);
+    } else {
+      throw ArticleDoesNotExistException(input[0], input[1]);
     }
   }
   msH.recvCode(); // ANS_END
-
-
-
+  return "";
+}
 
   // msH.recvCode();
   // int nbrNgs=msH.recvIntParameter();
@@ -241,9 +246,9 @@ string ClientCommandHandler::deleteArticle(vector<string> &input){
   //
   //   msH.recvCode();
   // }
-  return "";
-}
-string ClientCommandHandler::getArticle(vector<string> &input){
+
+string ClientCommandHandler::getArticle(vector<string> &input) throw (NGDoesNotExistException, ArticleDoesNotExistException){
+  // messages to server
   msH.sendCode(Protocol::COM_GET_ART);
   auto ngId = stoul(input[0]);
   auto artId = stoul(input[1]);
@@ -251,12 +256,13 @@ string ClientCommandHandler::getArticle(vector<string> &input){
   msH.sendIntParameter(artId);
   msH.sendCode(Protocol::COM_END);
 
+  // messages from server
   if (msH.recvCode() == Protocol::ANS_GET_ART) {
-    //debug output
     if (DEBUG)
       cout<<"Reading Article nr."<<artId<<" from Newsgroup nr."<<ngId<<"."<<endl;
   }
 
+  // succesful?
   string result = "";
   auto response = msH.recvCode();
   if (response == Protocol::ANS_ACK) {
@@ -265,15 +271,17 @@ string ClientCommandHandler::getArticle(vector<string> &input){
     result.append("Author: ");
     result += msH.recvStringParameter() + "\n" + string(80, '-') + "\n";
     result += msH.recvStringParameter() + "\n";
-  } else { //response was ANS_NAK
-    // Behöver kanske hantera detta
+  } else { // ANS_NAK
     response = msH.recvCode();
+    msH.recvCode(); // ANS_END
     if (response == Protocol::ERR_NG_DOES_NOT_EXIST) {
-      if (DEBUG)
-        cout << "Newsgroup " << ngId << " does not exist" << endl;
-    } else { // ERR_ART_DOES_NOT_EXIST
-      if (DEBUG)
-        cout << "Article " << artId << " in newsgroup " << ngId << " does not exist" << endl;
+      if (DEBUG) cout << "Newsgroup " << ngId << " does not exist" << endl;
+
+      throw NGDoesNotExistException(input[0]);
+    } else if (response == Protocol::ERR_ART_DOES_NOT_EXIST){
+        throw ArticleDoesNotExistException(input[0], input[1]);
+    } else {
+        throw exception();
     }
   }
   msH.recvCode(); // ANS_END
