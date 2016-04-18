@@ -1,9 +1,9 @@
+
 /* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
+** Project for the course EDA031 at Lunds University, spring 2016.
 **
 ** inputhandler.h
+**
 ** Recieves long string and translates the first words into command and
 ** remaining content related to the command.
 ** Returns a pair with int and a string. (int command, string content)
@@ -25,9 +25,9 @@
 #include <fstream>
 #include <string>
 
-#include "../common/protocol.h"
-#include "../common/exceptions/inputexception.h"
-#include "../common/exceptions/invalidpathexception.h"
+#include "../connection/protocol.h"
+#include "../connection/exceptions/inputexception.h"
+#include "../connection/exceptions/invalidpathexception.h"
 /*-------------------------------------
     D E C L A R A T I O N S
 -------------------------------------*/

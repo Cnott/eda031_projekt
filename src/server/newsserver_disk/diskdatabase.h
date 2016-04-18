@@ -68,7 +68,6 @@ private:
 
   std::map<unsigned int, Newsgroup>   newsgroupDB;
   unsigned int                        latestNewsgroupID;
-  unsigned int                        latestArticleID;
   Article                             tmpArticle;
 
   std::string dbRoot        = "database/";

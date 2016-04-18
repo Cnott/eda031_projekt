@@ -4,44 +4,53 @@ using namespace std;
 
 const bool DEBUG = false;
 
-DiskDatabase::DiskDatabase() : tmpArticle(0, "", "", ""){
+DiskDatabase::DiskDatabase() : tmpArticle(0, "", "", "") {
   latestNewsgroupID = 0;
-  latestArticleID   = 0;
 
   initDatabase();
-
   if (DEBUG) print();
   saveDBInfo();
 }
 
+/*  Reads the latest article id from a file in the appropriate
+    newsgroup.
+*/
 unsigned int DiskDatabase::latestArticleId( unsigned int ngId ) {
-  ifstream ifs(path(ngId) + "/.dbinfo", ifstream::in);
+  ifstream ifs(path(ngId) + "/.dbinfo", ifstream::in);    // path to newsgroup
 
   unsigned int aId;
   string tmp;
-  getline(ifs, tmp);
+  getline(ifs, tmp);          // first line is ngName
   ifs >> tmp;
-  aId = stoul(tmp);
+  aId = stoul(tmp);           // this is the lates article id
   ifs.close();
 
   return aId;
 }
 
+/*  Returns the path to the newsgroup with the id ngId */
 string DiskDatabase::path(unsigned int ngId) {
   return dbRoot + to_string(ngId);
 }
 
+/*  Returns the path to the article with the id aId, in the newsgroup
+    with ngId.
+*/
 string DiskDatabase::path(unsigned int ngId, unsigned int aId) {
   return path(ngId) + "/" + to_string(aId);
 }
 
+/*  Save relevant info for the database. Atm, this is just the latest ngId */
 void DiskDatabase::saveDBInfo() {
   ofstream ofs(dbRoot + ".dbinfo", ofstream::out);
 
-  ofs << to_string(latestNewsgroupID) << endl;// << to_string(latestArticleId());
+  ofs << to_string(latestNewsgroupID) << endl;
   ofs.close();
 }
 
+/*  Adds a newsgroup with the name 'name' to the database, if it does not
+    already exist.
+*/
 bool DiskDatabase::addNewsgroup(string name) {
   if (newsgroupInDB(name)) return false;
 
@@ -54,6 +63,9 @@ bool DiskDatabase::addNewsgroup(string name) {
   return true;
 }
 
+/*  Adds an article to the database if the newsgroup with id ngId already
+    exists. Article parameters are 'title', 'author' and 'text'.
+*/
 bool DiskDatabase::addArticle(unsigned int ngId,
                               std::string  title,
                               std::string  author,
