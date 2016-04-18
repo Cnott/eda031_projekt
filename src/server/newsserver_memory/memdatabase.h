@@ -28,7 +28,6 @@ class MemDatabase : public Database {
 public:
   MemDatabase() {
     latestNewsgroupID = 1;
-    latestArticleID = 1;
   }
   ~MemDatabase() {};
   bool addNewsgroup                       ( std::string ngName      );
@@ -54,7 +53,6 @@ private:
   std::string getNewsgroupName            ( unsigned int ngId       );
 
   unsigned int latestNewsgroupID;
-  unsigned int latestArticleID;
   std::map<unsigned int, Newsgroup> newsgroupDB;
 
 };

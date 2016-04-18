@@ -5,7 +5,7 @@ using namespace std;
 Newsgroup::Newsgroup(unsigned int id, string name) {
   this->id = id;
   this->name = name;
-
+  latestArticleId = 0;
 }
 
 string Newsgroup::getName() {
@@ -43,4 +43,8 @@ map<unsigned int, Article>::iterator Newsgroup::end() {
 
 bool Newsgroup::articleInNG(unsigned int key) {
   return articles.find(key) != articles.end();
+}
+
+unsigned int Newsgroup::incArticleId() {
+  return ++latestArticleId;
 }

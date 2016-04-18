@@ -28,8 +28,9 @@ public:
   bool remove                 ( unsigned int       );
   bool articleInNG            ( unsigned int key   );
   const Article& at           ( unsigned int       );
-  std::string getName         ();
+  unsigned int incArticleId   ();
   unsigned int getId          ();
+  std::string  getName        ();
 
   std::map<unsigned int, Article>::iterator begin ();
   std::map<unsigned int, Article>::iterator end   ();
@@ -37,8 +38,8 @@ public:
 private:
   std::string   name;
   unsigned int  id;
+  unsigned int latestArticleId;
   std::map<unsigned int, Article> articles;
-
 };
 
 #endif // NEWSGROUP_H

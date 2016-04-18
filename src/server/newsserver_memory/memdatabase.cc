@@ -24,17 +24,11 @@ bool MemDatabase::addNewsgroup(string ngName){
 /* Adds article aId to newsgroup ngId if the newsgroup exists. */
 bool MemDatabase::addArticle (unsigned int ngId, string title,
                               string author, string text) {
-  Article a1(latestArticleID, title, author, text);
   if (!newsgroupInDB(ngId))
    return false;
-  if (newsgroupDB.at(ngId).add(a1)) {
-    // Succesfully added a1 to articles in ngId.
-    ++latestArticleID;
-    return true;
-  } else {
-    // Unsuccesfull at adding a1 to articles in ngId.
-    return false;
-  }
+
+  Article a1(newsgroupDB.at(ngId).incArticleId(), title, author, text);
+  return (newsgroupDB.at(ngId).add(a1));
 }
 
 /* Removes the newsgroup with id ngId and returns true if sucessful. */
