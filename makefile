@@ -68,8 +68,10 @@ clean:
 	rm -f $(CONNEC)*.o $(CONNEC)*.d
 	rm -f $(CLIENT)*.o $(CLIENT)*.d
 	rm -f -r $(OUTPUT)
-	#rm -f -r database
-	#rm -f -r database/.dbinfo
+
+# Remove database
+clean-database:
+	rm -f -r database
 
 # Generate dependencies in *.d files
 %.d: %.cc

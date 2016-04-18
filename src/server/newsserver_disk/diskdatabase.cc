@@ -241,7 +241,6 @@ vector<Article> DiskDatabase::listArticles(unsigned int ngId) {
   DIR* ngDir;
   dirent* art_dirent;
   ngDir = opendir(path(ngId).c_str());
-  cout << "and in here..." << endl;
 
   // browse the ng directory
   list<unsigned int> artOrder;
