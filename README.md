@@ -20,7 +20,9 @@ create article x path:		Creates new article in newsgroup x from the content
 delete newsgroup x:			Deletes newsgroup x.
 delete article x y:			Deletes article y from newsgroup x.
 ```
-The servers should be run as follows:
+First compile by running `make`
+
+The servers should then be run as follows:
 ```
   bin/newsserver_memory <port>
   bin/newsserver_disk <port>
