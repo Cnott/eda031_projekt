@@ -1,3 +1,4 @@
+#USENET NEWS lite
 ##Projekt for the course EDA031 at Lunds University, spring 2016
 
 This is a system that consists of a server that can handle data in the form of
