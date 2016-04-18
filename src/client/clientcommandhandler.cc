@@ -2,7 +2,7 @@
 
 using namespace std;
 
-bool DEBUG = true;
+bool DEBUG = false;
 
 /*  This is the method that the client executes, after parsing input with
     the inputhandler. The methods' purpose is fairly self-explanatory.

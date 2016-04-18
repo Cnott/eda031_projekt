@@ -285,9 +285,9 @@ const Article& DiskDatabase::getArticle(unsigned int ngId, unsigned int aId) {
 
 /*  Scans the directory for the newsgroup 'ngId' to find the article 'aId'
     returns true if the article is found, false otherwise.
-    @pre: Caller should first check if the newsgroup exists
 */
 bool DiskDatabase::articleInDB(unsigned int ngId, unsigned int aId) {
+  if (!newsgroupInDB(ngId)) return false;
   DIR* ngDir;
   dirent* a_dirent;
   ngDir = opendir(path(ngId).c_str());
