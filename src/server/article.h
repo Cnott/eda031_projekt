@@ -1,9 +1,8 @@
 /* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
+** Project for the course EDA031 at Lunds University, spring 2016.
 **
 ** article.h
+**
 ** An article object contains an unique id, a title, an author and a text.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
@@ -26,18 +25,19 @@
 -------------------------------------*/
 class Article {
 public:
-  Article(unsigned int, std::string, std::string, std::string);
-  const unsigned int getId();
-  const std::string getTitle();
-  const std::string getAuthor();
-  const std::string getText();
+  Article ( unsigned int, std::string,
+            std::string, std::string   );
+
+  const unsigned int getId            ();
+  const std::string getTitle          ();
+  const std::string getAuthor         ();
+  const std::string getText           ();
 
 private:
   unsigned int id;
   std::string title;
   std::string author;
   std::string text;
-
 };
 
-#endif
+#endif  // ARTICLE_H

@@ -24,7 +24,7 @@
 // ------------------------------------------------------------------
 
 #include "connection.h"
-#include "connectionclosedexception.h"
+#include "exceptions/connectionclosedexception.h"
 
 #include <iostream>
 #include <cstdlib>      /* exit() */
@@ -52,13 +52,13 @@ Connection::Connection(const char* host, int port) {
 		signal(SIGPIPE, SIG_IGN);
 		ignoresPipeSignals = true;
 	}
-	
+
 	my_socket = socket(AF_INET,SOCK_STREAM, 0);
 	if (my_socket < 0) {
 		my_socket = -1;
 		return;
 	}
-	
+
 	sockaddr_in server;
 	server.sin_family = AF_INET;
 	hostent* hp = gethostbyname(host);
@@ -66,7 +66,7 @@ Connection::Connection(const char* host, int port) {
 		my_socket = -1;
 		return;
 	}
-	
+
 	memcpy(reinterpret_cast<char*>(&server.sin_addr),
 		   reinterpret_cast<char*>(hp->h_addr),
 		   hp->h_length);

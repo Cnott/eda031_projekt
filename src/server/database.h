@@ -1,10 +1,10 @@
 /* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
+** Project for the course EDA031 at Lunds University, spring 2016.
 **
 ** database.h
-** <very brief file description>
+**
+** An interface for a newsgroup database. Functions to create and delete
+** newsgroups and articles.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
@@ -19,29 +19,27 @@
 #include "newsgroup.h"
 
 /*-------------------------------------
-    D E C L A R A T I O N S
--------------------------------------*/
-
-
-/*-------------------------------------
     C L A S S   D E F
 -------------------------------------*/
 
 class Database {
 public:
   virtual ~Database() {}
-  virtual bool addNewsgroup(std::string ngName) = 0;
-  virtual bool addArticle(unsigned int ngId, std::string artName, std::string author, std::string text) = 0;
-  virtual bool removeNewsgroup(unsigned int ngId) = 0;
-  virtual bool removeArticle(unsigned int ngId, unsigned int aId) = 0;
-  virtual std::string getNewsgroupName(unsigned int ngId) = 0;
-  virtual std::vector<Newsgroup> listNewsgroups() = 0;
-  virtual std::vector<Article> listArticles(unsigned int ngId) = 0;
-  virtual const Article& getArticle(unsigned int ngID, unsigned int artID) = 0;
 
-  virtual bool articleInDB(unsigned int ngKey, unsigned int aKey) = 0;  // Possibly needs a bette solution.
-  virtual bool newsgroupInDB(unsigned int) = 0;
+  virtual bool addNewsgroup       ( std::string ngName                    ) = 0;
+  virtual bool addArticle         ( unsigned int ngId, std::string artName,
+                                    std::string author, std::string text  ) = 0;
+  virtual bool removeNewsgroup    ( unsigned int ngId                     ) = 0;
+  virtual bool removeArticle      ( unsigned int ngId, unsigned int aId   ) = 0;
+  virtual bool articleInDB        ( unsigned int ngKey, unsigned int aKey ) = 0;
+  virtual bool newsgroupInDB      ( unsigned int                          ) = 0;
+
+  virtual const Article&          getArticle      ( unsigned int ngID,
+                                                    unsigned int artID    ) = 0;
+  virtual std::vector<Newsgroup>  listNewsgroups  (                       ) = 0;
+  virtual std::vector<Article>    listArticles    ( unsigned int ngId     ) = 0;
+
 private:
 };
 
-#endif
+#endif  // DATABASE_H

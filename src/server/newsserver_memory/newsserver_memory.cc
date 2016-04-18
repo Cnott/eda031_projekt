@@ -1,7 +1,16 @@
+/* ---------------------------------------------------------------------------
+** Project for the course EDA031 at Lunds University, spring 2016.
+**
+** newsserver_memory.cc
+**
+** Runs a newsserver with a cached MemDatabase.
+**
+** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
+** -------------------------------------------------------------------------*/
 #include "../newsserver.h"
-//#include "../database.h"
 #include "memdatabase.h"
 #include <exception>
+
 using namespace std;
 int main(int argc, char* argv[]) {
   MemDatabase db;

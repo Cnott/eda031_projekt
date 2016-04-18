@@ -24,7 +24,7 @@
 // ------------------------------------------------------------------
 
 #include "server.h"
-#include "../common/connection.h"
+#include "../connection/connection.h"
 
 #include <memory>
 #include <iostream>

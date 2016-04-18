@@ -1,9 +1,4 @@
-#include <string>
-#include "connection.h"
-#include "logger.h"
 #include "messagehandler.h"
-#include "connectionclosedexception.h"
-#include "protocol.h"
 
 using namespace std;
 
