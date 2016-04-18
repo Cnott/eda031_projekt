@@ -13,8 +13,8 @@
 #include <string>
 
 struct NGDoesNotExistException{
-	NGDoesNotExistException(std::string ngId) {
-		msg = "The newsgroup with id " + ngId + " does not exist.";
+	NGDoesNotExistException(std::string ngName) {
+		msg = "The newsgroup " + ngName + " does not exist.";
 	}
 	std::string msg;
 };

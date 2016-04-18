@@ -28,9 +28,13 @@ PROGS = $(MEMSRV)newsserver_memory $(CLIENT)clientMain \
 				$(DSKSRV)newsserver_disk
 
 install: $(PROGS)
+	rm -f -r $(OUTPUT)
+	mkdir $(OUTPUT)
 	mv $(MEMSRV)newsserver_memory $(OUTPUT)
 	mv $(DSKSRV)newsserver_disk $(OUTPUT)
 	mv $(CLIENT)clientMain $(OUTPUT)client
+
+all: $(MEMSRV)newsserver_memory $(DSKSRV)newsserver_disk $(CLIENT)clientMain
 
 # Targets rely on implicit rules for compiling and linking
 $(MEMSRV)newsserver_memory: $(MEMSRV)newsserver_memory.o $(SERVER)newsserver.o \
@@ -60,18 +64,12 @@ $(CLIENT)clientMain: 				$(CLIENT)clientMain.o $(CONNEC)connection.o \
 
 # Standard clean
 clean:
-	rm -f *.o $(PROGS)
-	rm -f $(SERVER)*.o
-	rm -f $(SERVER)*.d
-	rm -f $(MEMSRV)*.o
-	rm -f $(MEMSRV)*.d
-	rm -f $(DSKSRV)*.o
-	rm -f $(DSKSRV)*.d
-	rm -f $(CONNEC)*.o
-	rm -f $(CONNEC)*.d
-	rm -f $(CLIENT)*.o
-	rm -f $(CLIENT)*.d
-	rm -f $(OUTPUT)*
+	rm -f $(SERVER)*.o $(SERVER)*.d
+	rm -f $(MEMSRV)*.o $(MEMSRV)*.d
+	rm -f $(DSKSRV)*.o $(DSKSRV)*.d
+	rm -f $(CONNEC)*.o $(CONNEC)*.d
+	rm -f $(CLIENT)*.o $(CLIENT)*.d
+	rm -f -r $(OUTPUT)
 	#rm -f -r database
 	#rm -f -r database/.dbinfo
 
