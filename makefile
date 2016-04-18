@@ -57,8 +57,6 @@ $(CLIENT)clientMain: 				$(CLIENT)clientMain.o $(CONNEC)connection.o \
 														$(EXCEPT)ngdoesnotexistexception.h \
 														$(EXCEPT)invalidpathexception.h
 
-
-
 # Phony targets
 .PHONY: all clean
 
