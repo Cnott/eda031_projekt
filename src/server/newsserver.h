@@ -1,10 +1,9 @@
 /* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
+** Project for the course EDA031 at Lunds University, spring 2016.
 **
 ** newsserver.h
-** <very brief file description>
+** Runs a Server and connects it to a Database using a ServerCommandHandler,
+** and a MessageHandler.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
@@ -19,16 +18,11 @@
 #include <stdexcept>
 
 #include "server.h"
-#include "../common/connection.h"
-#include "../common/connectionclosedexception.h"
-#include "../common/messagehandler.h"
 #include "database.h"
 #include "servercommandhandler.h"
-
-/*-------------------------------------
-    D E C L A R A T I O N S
--------------------------------------*/
-
+#include "../connection/connection.h"
+#include "../connection/exceptions/connectionclosedexception.h"
+#include "../connection/messagehandler.h"
 
 /*-------------------------------------
     C L A S S   D E F
@@ -36,12 +30,12 @@
 
 class NewsServer {
 public:
-  NewsServer(int argc, char* argv[]);
-  ~NewsServer();
-  void run(Database& db);
+  NewsServer    ( int argc, char* argv[]  );
+  ~NewsServer   ();
 
+  void run      ( Database& db            );
 private:
   int port = -1;
 };
 
-#endif
+#endif  // NEWSSERVER_H

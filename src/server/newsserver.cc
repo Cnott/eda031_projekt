@@ -20,26 +20,27 @@ NewsServer::NewsServer(int argc, char* argv[]) {
 NewsServer::~NewsServer() {}
 
 void NewsServer::run(Database& db_in) {
+  // init db pointer and start Server object
   Database* db = &db_in;
   Server server(port);
 
+  // check if everything is going as excpected
   if (!server.isReady()) {
 		cerr << "Server initialization error." << endl;
 		exit(1);
 	}
 
+  // main run loop
   while (true) {
-
     auto conn = server.waitForActivity();
 
+    // while we have a connection
     if (conn != nullptr) {
-      // handle messages
-
-
+      // handle messages to the server
       try {
         MessageHandler msH(*conn.get());
         ServerCommandHandler scH(msH, *db);
-        scH.update();
+        scH.execute();
       } catch (ConnectionClosedException e) {
         server.deregisterConnection(conn);
         cout<<"Client closed the connection"<<endl;

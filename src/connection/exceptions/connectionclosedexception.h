@@ -16,4 +16,4 @@
 
 struct ConnectionClosedException {};
 
-#endif
+#endif // CONNECTION_CLOSED_EXCEPTION

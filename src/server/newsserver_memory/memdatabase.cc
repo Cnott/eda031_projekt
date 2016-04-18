@@ -2,11 +2,12 @@
 
 using namespace std;
 
+/*  Adds a newsgroup to the database if it does not already exist. */
 bool MemDatabase::addNewsgroup(string ngName){
   Newsgroup ng(latestNewsgroupID,ngName);
   //checking if the name already exists
-  for(auto it=newsgroupDB.begin();it!=newsgroupDB.end();it++){
-    if(it->second.getName()==ngName){
+  for(auto it = newsgroupDB.begin(); it!=newsgroupDB.end(); it++) {
+    if(it->second.getName() == ngName){
       return false;
     }
   }
@@ -20,7 +21,9 @@ bool MemDatabase::addNewsgroup(string ngName){
   }
 }
 
-bool MemDatabase::addArticle (unsigned int ngId, string title, string author, string text) {
+/* Adds article aId to newsgroup ngId if the newsgroup exists. */
+bool MemDatabase::addArticle (unsigned int ngId, string title,
+                              string author, string text) {
   Article a1(latestArticleID, title, author, text);
   if (!newsgroupInDB(ngId))
    return false;
@@ -34,6 +37,7 @@ bool MemDatabase::addArticle (unsigned int ngId, string title, string author, st
   }
 }
 
+/* Removes the newsgroup with id ngId and returns true if sucessful. */
 bool MemDatabase::removeNewsgroup(unsigned int ngId) {
   if (!newsgroupInDB(ngId))
     return false;
@@ -46,6 +50,9 @@ bool MemDatabase::removeNewsgroup(unsigned int ngId) {
   return false;
 }
 
+/*  Tries to remove the article aId from the database and returns true if
+    successful. If either article or newsgroup do not exist, returns false.
+*/
 bool MemDatabase::removeArticle(unsigned int ngId, unsigned int aId){
   if (!newsgroupInDB(ngId))
     return false;
@@ -58,12 +65,16 @@ bool MemDatabase::removeArticle(unsigned int ngId, unsigned int aId){
   return false;
 }
 
+/*  Returns the name of the newsgroup with id ngId, if it exists.*/
 string MemDatabase::getNewsgroupName(unsigned int ngId) {
   if (!newsgroupInDB(ngId))
     return "";
   return newsgroupDB.at(ngId).getName();
 }
 
+/*  Returns a vector with all newsgroups in the database, sorted in order of
+    their ngId - which are given in chronological (creation) order.
+*/
 vector<Newsgroup>  MemDatabase::listNewsgroups(){
   vector<Newsgroup> newsVector;
   for(auto it : newsgroupDB) { //iterate newsgroups
@@ -72,6 +83,9 @@ vector<Newsgroup>  MemDatabase::listNewsgroups(){
   return newsVector;
 }
 
+/*  Returns a vector of all the articles in the newsgroup ngId in order of
+    their aId.
+*/
 vector<Article>  MemDatabase::listArticles(unsigned int ngId){
   vector<Article> articleVector;
   for (auto it : newsgroupDB.at(ngId)) { //Iterate articles
@@ -80,27 +94,24 @@ vector<Article>  MemDatabase::listArticles(unsigned int ngId){
   return articleVector;
 }
 
+/*  Returns the article with id aId in the newsgroup ngId, if both exist.
+    @pre: Caller should make sure the article exists
+*/
 const Article& MemDatabase::getArticle(unsigned int ngId, unsigned int artId){
   return newsgroupDB.at(ngId).at(artId);
 }
 
+/*  Returns true if the newsgroup ngId is already in the database. False
+    otherwise.
+*/
 bool MemDatabase::newsgroupInDB(unsigned int key) {
-  if ( newsgroupDB.find(key) == newsgroupDB.end() ) {
-  // not found
-  return false;
-  } else {
-  // found
-  return true;
-  }
+  return  !(newsgroupDB.find(key) == newsgroupDB.end());
 }
 
-/*
-    Returns true if article with key 'aKey', is in the db, specifically in the
+/*  Returns true if article with key 'aKey', is in the db, specifically in the
     newsgroup with key 'ngKey'.
-
-    Pre: Caller has already confirmed that newsgroup with ngKey is in the DB
+    @pre: Caller has already confirmed that newsgroup with ngKey is in the DB
 */
- // Possibly needs a bette solution.
 bool MemDatabase::articleInDB(unsigned int ngKey, unsigned int aKey) {
   return newsgroupDB.at(ngKey).articleInNG(aKey);
 }

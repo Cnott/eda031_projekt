@@ -19,35 +19,32 @@ OUTPUT = bin/
 SERVER = src/server/
 MEMSRV = src/server/newsserver_memory/
 DSKSRV = src/server/newsserver_disk/
-COMMON = src/common/
+CONNEC = src/connection/
 CLIENT = src/client/
-EXCEPT = src/common/exceptions/
+EXCEPT = $(CONNEC)exceptions/
 
 # Targets
-PROGS = $(SERVER)testMain $(MEMSRV)newsserver_memory $(CLIENT)clientMain \
+PROGS = $(MEMSRV)newsserver_memory $(CLIENT)clientMain \
 				$(DSKSRV)newsserver_disk
 
-all: $(PROGS)
-	mv $(SERVER)testMain $(OUTPUT)
+install: $(PROGS)
 	mv $(MEMSRV)newsserver_memory $(OUTPUT)
 	mv $(DSKSRV)newsserver_disk $(OUTPUT)
 	mv $(CLIENT)clientMain $(OUTPUT)client
 
 # Targets rely on implicit rules for compiling and linking
-$(SERVER)testMain: 					$(SERVER)testMain.o $(SERVER)article.o \
-														$(SERVER)newsgroup.o $(MEMSRV)memdatabase.o
 $(MEMSRV)newsserver_memory: $(MEMSRV)newsserver_memory.o $(SERVER)newsserver.o \
 														$(SERVER)server.o $(SERVER)article.o \
 														$(SERVER)newsgroup.o $(MEMSRV)memdatabase.o \
-														$(COMMON)connection.o $(COMMON)messagehandler.o \
+														$(CONNEC)connection.o $(CONNEC)messagehandler.o \
 														$(SERVER)servercommandhandler.o
 $(DSKSRV)newsserver_disk: 	$(DSKSRV)newsserver_disk.o $(SERVER)newsserver.o \
 														$(SERVER)server.o $(SERVER)article.o \
 														$(SERVER)newsgroup.o $(DSKSRV)diskdatabase.o \
-														$(COMMON)connection.o $(COMMON)messagehandler.o \
+														$(CONNEC)connection.o $(CONNEC)messagehandler.o \
 														$(SERVER)servercommandhandler.o
-$(CLIENT)clientMain: 				$(CLIENT)clientMain.o $(COMMON)connection.o \
-														$(COMMON)messagehandler.o \
+$(CLIENT)clientMain: 				$(CLIENT)clientMain.o $(CONNEC)connection.o \
+														$(CONNEC)messagehandler.o \
 														$(CLIENT)clientcommandhandler.o \
 														$(CLIENT)inputhandler.o \
 														$(EXCEPT)inputexception.h \
@@ -66,8 +63,12 @@ clean:
 	rm -f *.o $(PROGS)
 	rm -f $(SERVER)*.o
 	rm -f $(SERVER)*.d
-	rm -f $(COMMON)*.o
-	rm -f $(COMMON)*.d
+	rm -f $(MEMSRV)*.o
+	rm -f $(MEMSRV)*.d
+	rm -f $(DSKSRV)*.o
+	rm -f $(DSKSRV)*.d
+	rm -f $(CONNEC)*.o
+	rm -f $(CONNEC)*.d
 	rm -f $(CLIENT)*.o
 	rm -f $(CLIENT)*.d
 	rm -f $(OUTPUT)*
