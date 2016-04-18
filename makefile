@@ -21,6 +21,7 @@ MEMSRV = src/server/newsserver_memory/
 DSKSRV = src/server/newsserver_disk/
 COMMON = src/common/
 CLIENT = src/client/
+EXCEPT = src/common/exceptions/
 
 # Targets
 PROGS = $(SERVER)testMain $(MEMSRV)newsserver_memory $(CLIENT)clientMain \
@@ -48,7 +49,14 @@ $(DSKSRV)newsserver_disk: 	$(DSKSRV)newsserver_disk.o $(SERVER)newsserver.o \
 $(CLIENT)clientMain: 				$(CLIENT)clientMain.o $(COMMON)connection.o \
 														$(COMMON)messagehandler.o \
 														$(CLIENT)clientcommandhandler.o \
-														$(CLIENT)inputhandler.o
+														$(CLIENT)inputhandler.o \
+														$(EXCEPT)inputexception.h \
+														$(EXCEPT)noarticleexception.h \
+														$(EXCEPT)ngexistsexception.h \
+														$(EXCEPT)ngdoesnotexistexception.h \
+														$(EXCEPT)invalidpathexception.h
+
+
 
 # Phony targets
 .PHONY: all clean

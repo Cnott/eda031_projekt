@@ -11,18 +11,21 @@
 #ifndef CLIENTCOMMANDHANDLER_H
 #define CLIENTCOMMANDHANDLER_H
 
-#include <utility>
-#include <vector>
-#include <string>
-#include <iostream>
-
-#include "../common/protocol.h"
 
 /*-------------------------------------
     I N C L U D E S
 -------------------------------------*/
-#include "../common/messagehandler.h"
+#include <utility>
+#include <vector>
+#include <string>
+#include <iostream>
+#include <exception>
+
 #include "../common/protocol.h"
+#include "../common/messagehandler.h"
+#include "../common/exceptions/ngexistsexception.h"
+#include "../common/exceptions/ngdoesnotexistexception.h"
+#include "../common/exceptions/noarticleexception.h"
 
 /*-------------------------------------
     D E C L A R A T I O N S
@@ -40,12 +43,12 @@ public:
 
 private:
   std::string listNewsgroups();
-  std::string createNewsGroup(std::vector<std::string> &);
-  std::string deleteNewsGroup(std::vector<std::string> &);
-  std::string listArticles(std::vector<std::string> &);
-  std::string createArticle(std::vector<std::string> &);
-  std::string deleteArticle(std::vector<std::string> &);
-  std::string getArticle(std::vector<std::string> &);
+  std::string createNewsGroup(std::vector<std::string> &) throw (NGExistsException);
+  std::string deleteNewsGroup(std::vector<std::string> &) throw (NGDoesNotExistException);
+  std::string listArticles(std::vector<std::string> &) throw (NGDoesNotExistException);
+  std::string createArticle(std::vector<std::string> &) throw (NGDoesNotExistException);
+  std::string deleteArticle(std::vector<std::string> &) throw (NGDoesNotExistException, ArticleDoesNotExistException);
+  std::string getArticle(std::vector<std::string> &) throw (NGDoesNotExistException, ArticleDoesNotExistException);
 
   MessageHandler msH;
 };

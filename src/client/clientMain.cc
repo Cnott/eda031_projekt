@@ -3,6 +3,10 @@
 #include "clientcommandhandler.h"
 #include "../common/connection.h"
 #include "../common/messagehandler.h"
+#include "../common/exceptions/ngexistsexception.h"
+#include "../common/exceptions/ngdoesnotexistexception.h"
+#include "../common/exceptions/noarticleexception.h"
+#include "../common/exceptions/invalidpathexception.h"
 
 using namespace std;
 int main(int argc, char* argv[]) {
@@ -60,10 +64,20 @@ int main(int argc, char* argv[]) {
       } else {
         output = ccH.update(ih.parseInput(input));
         cout << string(80, '-') << "\n" << output << "\n";
-        cout << string(80, '-') << "\n" << endl;
+        cout << string(80, '-') << "\n";
       }
-		} catch (exception& e) {
-			cout << " Error: some error." << endl;
+		} catch (InputException& e) {
+      cout << e.msg << endl;
+    } catch (NGDoesNotExistException& e) {
+      cout << e.msg << endl;
+    } catch (NGExistsException& e) {
+      cout << e.msg << endl;
+    } catch (ArticleDoesNotExistException& e) {
+      cout << e.msg << endl;
+    } catch (InvalidPathException& e) {
+      cout << e.msg << endl;
+    } catch (exception& e) {
+			cout << " Error: Something went wrong. Client is closing." << endl;
 			exit(1);
 		}
 	}
