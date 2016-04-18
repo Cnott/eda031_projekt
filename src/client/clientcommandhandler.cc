@@ -62,15 +62,15 @@ string ClientCommandHandler::createNewsGroup(vector<string> &input) throw (NGExi
   msH.sendCode(Protocol::COM_CREATE_NG);
   msH.sendStringParameter(input[0]);
   msH.sendCode(Protocol::COM_END);
-
 // messages from server
   if (msH.recvCode() == Protocol::ANS_CREATE_NG) {
     if (DEBUG)
       cout << "Server: Trying to create newsgroup " << input[0] << endl;
   }
-
+  string result = "";
   auto response = msH.recvCode();
   if(response == Protocol::ANS_ACK){
+    result.append(input[0] + " added to the database.");
     if (DEBUG)
       cout << "Succeeded" << endl;
   } else if (response == Protocol::ANS_NAK) {
@@ -80,7 +80,7 @@ string ClientCommandHandler::createNewsGroup(vector<string> &input) throw (NGExi
       }
   }
   msH.recvCode(); // ANS_END
-  return input[0] + " added to the database";
+  return result;
 }
 string ClientCommandHandler::deleteNewsGroup(vector<string> &input) throw (NGDoesNotExistException){
   // messages to server
@@ -102,7 +102,7 @@ string ClientCommandHandler::deleteNewsGroup(vector<string> &input) throw (NGDoe
   // successful?
   if (msH.recvCode() == Protocol::ANS_ACK) {
     msH.recvCode(); // ANS_END
-    return "Newsgroup " + to_string(ngId) + " deleted";
+    return "Newsgroup " + to_string(ngId) + " deleted.";
   } else if (msH.recvCode() == Protocol::ERR_NG_DOES_NOT_EXIST){
       msH.recvCode(); // ANS_END
       throw NGDoesNotExistException(input[0]);
@@ -161,7 +161,8 @@ string ClientCommandHandler::createArticle(vector<string> &input) throw (NGDoesN
   string result = "";
   auto response = msH.recvCode();
   if (response == Protocol::ANS_ACK) {
-    result.append(input[1] + " by " + input[2] + " added to newsgroup " + input[0]);
+    result.append(input[1] + " by " + input[2] + " added to newsgroup "
+          + input[0] + ".");
   }  else if (msH.recvCode() == Protocol::ERR_NG_DOES_NOT_EXIST){
     msH.recvCode(); //ANS_END
     throw NGDoesNotExistException(input[0]);
@@ -213,8 +214,8 @@ string ClientCommandHandler::deleteArticle(vector<string> &input) throw (NGDoesN
   // successful?
   auto response = msH.recvCode();
   if (response == Protocol::ANS_ACK) {
-    if (DEBUG)
-      cout << "Article has been deleted" << endl;
+    return "Article " + to_string(artId) + " deleted from newsgroup "
+                + to_string(ngId) + ".";
   } else {
     response = msH.recvCode();
     msH.recvCode(); // ANS_END
