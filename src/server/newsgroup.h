@@ -1,7 +1,5 @@
 /* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
+** Project for the course EDA031 at Lunds University, spring 2016.
 **
 ** newsgroup.h
 ** A container class for articles.
@@ -19,31 +17,28 @@
 #include "article.h"
 
 /*-------------------------------------
-    D E C L A R A T I O N S
--------------------------------------*/
-// Not recommended -> using namespace std;
-
-/*-------------------------------------
     C L A S S   D E F
 -------------------------------------*/
 
 class Newsgroup {
 public:
   Newsgroup(unsigned int, std::string name);
-  std::string getName();
-  unsigned int getId();
-  bool add(Article);
-  bool remove(unsigned int);
-  const Article& at(unsigned int);
-  std::map<unsigned int, Article>::iterator begin();
-  std::map<unsigned int, Article>::iterator end();
 
-  bool articleInNG(unsigned int key);       // Possibly needs a bette solution.
+  bool add                    ( Article            );
+  bool remove                 ( unsigned int       );
+  bool articleInNG            ( unsigned int key   );
+  const Article& at           ( unsigned int       );
+  std::string getName         ();
+  unsigned int getId          ();
+
+  std::map<unsigned int, Article>::iterator begin ();
+  std::map<unsigned int, Article>::iterator end   ();
+
 private:
-  std::string name;
-  unsigned int id;
+  std::string   name;
+  unsigned int  id;
   std::map<unsigned int, Article> articles;
 
 };
 
-#endif
+#endif // NEWSGROUP_H

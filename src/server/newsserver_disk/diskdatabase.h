@@ -1,7 +1,5 @@
 /* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
+** Project for the course EDA031 at Lunds University, spring 2016.
 **
 ** diskdatabase.h
 ** Database that handles newsgroups and articles. Only keeps the objects in
@@ -59,7 +57,7 @@ private:
   void saveDBInfo               ();
   void saveNGInfo               ( std::string name,
                                   unsigned int ngId,
-                                  unsigned int aId                   );
+                                  unsigned int aId                  );
 
   unsigned int latestArticleId  ( unsigned int ngId                 );
   std::string path              ( unsigned int ngId                 );
@@ -75,4 +73,4 @@ private:
   DIR* dbRootDir;
 };
 
-#endif
+#endif  // DISKDATABASE_H

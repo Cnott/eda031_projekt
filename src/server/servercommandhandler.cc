@@ -8,7 +8,14 @@ ServerCommandHandler::ServerCommandHandler(MessageHandler& msH, Database& db)
     this->db = &db;
   }
 
-void ServerCommandHandler::update() {
+  /*  The methods in this class are fairly self-explanatory. They follow a
+      specific Protocol.h for taking care of tasks. The Protocol for each method
+      is listed above its definition and the message outputs are outlined
+      in comments.
+  */
+
+  /*  A simple switch case is executed to determine which Prorocol to follow. */
+void ServerCommandHandler::execute() {
   int cmd = msH.recvCode();
   switch (cmd) {
     case Protocol::COM_LIST_NG:     // list newsgroups
@@ -33,7 +40,6 @@ void ServerCommandHandler::update() {
       getArticle();
       break;
     case Protocol::COM_END:         // command end
-      // not really needed atm, but keeping "in case shit"
       break;
   }
 }

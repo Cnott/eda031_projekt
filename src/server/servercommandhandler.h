@@ -1,10 +1,9 @@
 /* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
+** Project for the course EDA031 at Lunds University, spring 2016.
 **
 ** servercommandhandler.h
-** <very brief file description>
+** Handles input to the server and responds accordingly. All input comes
+** through the MessageHandler and is assumed to follow the Protocol.
 **
 ** Authors: Andres Saemundsson, Anton Friberg, Oscar Gunneson
 ** -------------------------------------------------------------------------*/
@@ -14,17 +13,12 @@
 /*-------------------------------------
     I N C L U D E S
 -------------------------------------*/
-#include "../common/messagehandler.h"
-#include "../common/protocol.h"
+#include "../connection/messagehandler.h"
+#include "../connection/protocol.h"
 #include "database.h"
 #include "newsgroup.h"
 
 #include <vector>
-
-/*-------------------------------------
-    D E C L A R A T I O N S
--------------------------------------*/
-
 
 /*-------------------------------------
     C L A S S   D E F
@@ -32,18 +26,16 @@
 
 class ServerCommandHandler {
 public:
-  ServerCommandHandler(MessageHandler&, Database&);
-  void update();
-
-
+  ServerCommandHandler    ( MessageHandler&, Database&  );
+  void execute            ();
 private:
-  void listNewsgroups();
-  void createNewsgroup();
-  void deleteNewsgroup();
-  void listArticles();
-  void createArticle();
-  void deleteArticle();
-  void getArticle();
+  void listNewsgroups     ();
+  void createNewsgroup    ();
+  void deleteNewsgroup    ();
+  void listArticles       ();
+  void createArticle      ();
+  void deleteArticle      ();
+  void getArticle         ();
 
   MessageHandler msH;
   Database* db;
